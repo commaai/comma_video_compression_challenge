@@ -152,9 +152,8 @@ if __name__ == "__main__":
   batch_size = 8
   device = torch.device('cuda', 0)
   files = (HERE / 'public_test_video_names.txt').read_text().splitlines()
-  uncompressed_archive_path = None # Path('./test_videos.zip')
   uncompressed_data_dir = Path('./test_videos/')
-  ds = DaliVideoDataset(files, archive_path=uncompressed_archive_path, data_dir=uncompressed_data_dir, batch_size=batch_size, device=device)
+  ds = DaliVideoDataset(files, data_dir=uncompressed_data_dir, batch_size=batch_size, device=device)
   segnet = SegNet().eval().to(device)
   segnet_sd = load_file(segnet_sd_path, device=str(device))
   segnet.load_state_dict(segnet_sd)

@@ -76,12 +76,11 @@ def rgb_to_yuv6(rgb_chw: torch.Tensor) -> torch.Tensor:
   return torch.stack([y00, y10, y01, y11, U_sub, V_sub], dim=-3)
 
 class VideoDataset(torch.utils.data.IterableDataset):
-  def __init__(self, file_names: List[str], archive_path: Path, data_dir: Path, batch_size: int, device: torch.device, format: str = None, num_threads: int = 2, seed: int = 123, prefetch_queue_depth: int = 4):
+  def __init__(self, file_names: List[str], data_dir: Path, batch_size: int, device: torch.device, format: str = None, num_threads: int = 2, seed: int = 123, prefetch_queue_depth: int = 4):
     super().__init__()
     if format is not None:
       file_names = [str(Path(fn).with_suffix('.' + format.lstrip('.'))) for fn in file_names]
     self.all_file_names = file_names
-    self.archive_path = archive_path
     self.batch_size = batch_size
     self.device = device
     self.data_dir = data_dir
@@ -103,14 +102,6 @@ class VideoDataset(torch.utils.data.IterableDataset):
     return int(os.environ.get("RANK", "0")), int(os.environ.get("WORLD_SIZE", "1"))
 
   def prepare_data(self):
-    if self.rank == 0:
-      if not all((self.data_dir / fn).exists() for fn in self.all_file_names):
-        import zipfile
-        print(f"decompressing archive {self.archive_path} to {self.data_dir}...")
-        with zipfile.ZipFile(self.archive_path, 'r') as zip_ref:
-          zip_ref.extractall(self.data_dir)
-    if self.world_size > 1:
-      torch.distributed.barrier()
     assert all((self.data_dir / fn).exists() for fn in self.file_names)
     print(f"{type(self).__name__} on rank {self.rank} with {len(self.paths)} files.")
 
@@ -201,9 +192,8 @@ if __name__ == "__main__":
   device = torch.device('cuda')
   files = (HERE / 'public_test_video_names.txt').read_text().splitlines()
   fmt = 'hevc'
-  uncompressed_archive_path = None # Path('./test_videos.zip')
   uncompressed_data_dir = Path('./test_videos/')
-  ds = DaliVideoDataset(files, archive_path=uncompressed_archive_path, data_dir=uncompressed_data_dir, batch_size=batch_size, device=device, format=fmt)
+  ds = DaliVideoDataset(files, data_dir=uncompressed_data_dir, batch_size=batch_size, device=device, format=fmt)
   ds.prepare_data()
   for i, (path, idx, batch) in enumerate(ds):
     assert list(batch.shape)[1:] == [seq_len, camera_size[1], camera_size[0], 3], f"unexpected batch shape: {batch.shape}"

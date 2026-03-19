@@ -50,7 +50,7 @@ python modules.py
 bash examples/baseline_fast.sh --in-dir test_videos/ --jobs 1 --video-names-file public_test_video_names.txt --out-dir ./submission/
 
 # evaluate the naive recompression strategy
-torchrun --nproc-per-node 1 evaluate.py  --dataloader examples/baseline_dataloader_fast.py --compressed-deflated-dir ./submission
+torchrun --nproc-per-node 1 evaluate.py  --dataloader examples/baseline_dataloader_fast.py --compressed-dir ./submission
 ```
 
 If everything worked as expected, this should producce a `report.txt` file with this content:
@@ -58,16 +58,14 @@ If everything worked as expected, this should producce a `report.txt` file with 
 ```
 === Evaluation config ===
   batch_size: 16
-  compressed_archive_path: submission.zip
-  compressed_deflated_dir: submission
+  compressed_dir: submission
   dataloader: examples/baseline_dataloader_fast.py
   device: None
   num_threads: 2
   prefetch_queue_depth: 4
   report: report.txt
   seed: 1234
-  uncompressed_archive_path: test_videos.zip
-  uncompressed_deflated_dir: test_videos
+  uncompressed_dir: test_videos
 === Evaluation results over 600 samples ===
   Average PoseNet Distortion: 0.06430182
   Average SegNet Distortion: 0.00381109
@@ -87,9 +85,8 @@ class DatasetClass(torch.utils.data.IterableDataset):
   def __init__(
       self,
       file_names: List[str],
-      archive_path: Path,
-      data_dir: Path,
       batch_size: int,
+      device: torch.device,
       ...
       ):
 

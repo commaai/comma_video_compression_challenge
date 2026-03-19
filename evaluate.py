@@ -10,10 +10,8 @@ def main():
   parser.add_argument("--batch-size", type=int, default=16, help="dataloader batch size")
   parser.add_argument("--num-threads", type=int, default=2, help="DALI worker threads")
   parser.add_argument("--prefetch-queue-depth", type=int, default=4, help="DALI prefetch depth")
-  parser.add_argument("--compressed-archive-path", type=Path, default='./submission.zip', help="zip with compressed videos path")
-  parser.add_argument("--compressed-deflated-dir", type=Path, default='./submission/', help="compressed videos path")
-  parser.add_argument("--uncompressed-archive-path", type=Path, default='./test_videos.zip', help="zip with original uncompressed videos path")
-  parser.add_argument("--uncompressed-deflated-dir", type=Path, default='./test_videos/', help="original uncompressed videos path")
+  parser.add_argument("--compressed-dir", type=Path, default='./submission/', help="compressed videos path")
+  parser.add_argument("--uncompressed-dir", type=Path, default='./test_videos/', help="original uncompressed videos path")
   parser.add_argument("--seed", type=int, default=1234, help="RNG seed")
   parser.add_argument("--device", type=str, default=None, help="device: 'cpu' or 'cuda' (default: auto-detect)")
   parser.add_argument("--dataloader", type=Path, required=True, help="path to a .py file exporting DatasetClass")
@@ -61,17 +59,17 @@ def main():
   with open("public_test_video_names.txt", "r") as file:
     test_video_names = [line.strip() for line in file.readlines()]
 
-  ds_gt = DefaultDatasetClass(test_video_names, archive_path=args.uncompressed_archive_path, data_dir=args.uncompressed_deflated_dir, batch_size=args.batch_size, device=device, num_threads=args.num_threads, seed=args.seed, prefetch_queue_depth=args.prefetch_queue_depth)
+  ds_gt = DefaultDatasetClass(test_video_names, data_dir=args.uncompressed_dir, batch_size=args.batch_size, device=device, num_threads=args.num_threads, seed=args.seed, prefetch_queue_depth=args.prefetch_queue_depth)
   ds_gt.prepare_data()
   dl_gt = torch.utils.data.DataLoader(ds_gt, batch_size=None, num_workers=0)
 
-  ds_comp = SubmissionDatasetClass(test_video_names, archive_path=args.compressed_archive_path, data_dir=args.compressed_deflated_dir, batch_size=args.batch_size, device=device, num_threads=args.num_threads, seed=args.seed, prefetch_queue_depth=args.prefetch_queue_depth)
+  ds_comp = SubmissionDatasetClass(test_video_names, data_dir=args.compressed_dir, batch_size=args.batch_size, device=device, num_threads=args.num_threads, seed=args.seed, prefetch_queue_depth=args.prefetch_queue_depth)
   ds_comp.prepare_data()
   dl_comp = torch.utils.data.DataLoader(ds_comp, batch_size=None, num_workers=0)
 
   if rank == 0:
-    compressed_size = sum(file.stat().st_size for file in args.compressed_deflated_dir.rglob('*') if file.is_file())
-    uncompressed_size = sum(file.stat().st_size for file in args.uncompressed_deflated_dir.rglob('*') if file.is_file())
+    compressed_size = sum(file.stat().st_size for file in args.compressed_dir.rglob('*') if file.is_file())
+    uncompressed_size = sum(file.stat().st_size for file in args.uncompressed_dir.rglob('*') if file.is_file())
     rate = compressed_size / uncompressed_size
 
   dl = zip(dl_gt, dl_comp)
