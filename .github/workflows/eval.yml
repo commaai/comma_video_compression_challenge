@@ -13,18 +13,17 @@ jobs:
 
       - name: Install uv
         uses: astral-sh/setup-uv@v4
+        with:
+          enable-cache: true
 
       - name: Install dependencies (cpu)
         run: uv sync --group cpu
 
-      - name: Install ffmpeg
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg
-
       - name: Compress
-        run: uv run bash examples/compress.sh --crf 30 --scale 1 --in-dir test_videos/ --jobs 1 --video-names-file public_test_video_names.txt
+        run: bash examples/compress.sh --crf 30 --scale 1 --in-dir test_videos/ --jobs 1 --video-names-file public_test_video_names.txt
 
       - name: Evaluate
-        run: uv run python evaluate.py --device cpu --dataloader examples/dataloader.py
+        run: uv run --group cpu python evaluate.py --device cpu --dataloader examples/dataloader.py
 
       - name: Print report
         run: cat report.txt

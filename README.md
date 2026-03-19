@@ -37,7 +37,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 # pick one: cu126/ cu128 / cu130 / cpu
 uv sync --group cu128
 
-# activate or use "uv run python ..."
+# activate
 source .venv/bin/activate
 
 # test dataloaders
