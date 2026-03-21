@@ -31,7 +31,7 @@ jobs:
           ref: ${{ inputs.pr_number && format('refs/pull/{0}/merge', inputs.pr_number) || 'master' }}
 
       - name: Check GPU
-        if: ${{ inputs.runner == 'self-hosted' }}
+        if: ${{ inputs.runner == 'linux-nvidia-t4' }}
         run: |
           nvidia-smi
 
