@@ -2,16 +2,15 @@
 <!-- the directory name of your submission -->
 <!-- please make sure it matches exactly -->
 
-# report.txt
-<!-- copy the report.txt content here -->
-<!-- do not check it in the code (it's already ignored in .gitignore) -->
-
-```
-```
-
 # upload zipped `archive.zip`
 <!-- do not check it in the code (it's already ignored in .gitignore) -->
 <!-- you can use the upload file feature (drag and drop), make sure curl -L works -->
+
+# report.txt
+<!-- do not check it in the code (it's already ignored in .gitignore) -->
+<!-- copy the report.txt content here -->
+```
+```
 
 # does your submission require gpu for evaluation (inflation)?
 <!-- yes|no -->

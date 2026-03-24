@@ -94,8 +94,8 @@ def main():
         f"=== Evaluation results over {batch_sizes:.0f} samples ===",
         f"  Average PoseNet Distortion: {posenet_dist:.8f}",
         f"  Average SegNet Distortion: {segnet_dist:.8f}",
-        f"  Submission file size: {compressed_size} bytes",
-        f"  Original uncompressed size: {uncompressed_size} bytes",
+        f"  Submission file size: {compressed_size:,} bytes",
+        f"  Original uncompressed size: {uncompressed_size:,} bytes",
         f"  Compression Rate: {rate:.8f}",
         f"  Final score: 100*segnet_dist + √(10*posenet_dist) + 25*rate = {score:.2f}"
       ]

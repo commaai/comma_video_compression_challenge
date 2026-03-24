@@ -11,7 +11,7 @@
 === Evaluation results over 600 samples ===
   Average PoseNet Distortion: 0.38071454
   Average SegNet Distortion: 0.00946292
-  Submission file size: 2245157 bytes
-  Original uncompressed size: 37533786 bytes
+  Submission file size: 2,245,157 bytes
+  Original uncompressed size: 37,533,786 bytes
   Compression Rate: 0.05981696
   Final score: 100*segnet_dist + √(10*posenet_dist) + 25*rate = 4.39
