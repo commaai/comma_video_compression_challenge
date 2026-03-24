@@ -18,5 +18,5 @@ while IFS= read -r line; do
 
   printf "Decoding + resizing %s ... " "$line"
   cd "$ROOT"
-  python -m submissions.optimized.inflate "$SRC" "$DST"
+  python -m submissions.svt_av1.inflate "$SRC" "$DST"
 done < "$FILE_LIST"
