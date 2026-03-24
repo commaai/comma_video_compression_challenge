@@ -1,6 +1,6 @@
 # commaH26x_compression_challenge
 
- `./test_videos/b0c9d2329ad1606b|2018-07-27--06-03-57/10/video.hevc` is a 1 minute long driving video of size 37.5 MB. Make it as small as possible while preserving semantic content and temporal dynamics.
+ `./test_videos/b0c9d2329ad1606b|2018-07-27--06-03-57/10/video.hevc` is a 20 FPS 1 minute long driving video of size 37.5 MB. Make it as small as possible while preserving semantic content and temporal dynamics.
 
 - semantic content distortion is measured using:
   - a SegNet: average class disagreements between the predictions of a SegNet evaluated on original vs. reconstructed frames
@@ -91,13 +91,11 @@ A submission is a directory containing two assets:
 - **`inflate.sh`** — a bash script that converts the extracted `archive/` contents into raw video frames.
 - **optional**: a compression script that produces `archive.zip` from the original videos, and any other assets you want to include (code, models, etc.)
 
-c.f. `./evaluate.sh` for how the evaluation process works.
-
 `inflate.sh` must produce a raw video file at `<output_dir>/<segment_id>/video.raw`. A `.raw` file is a flat binary dump of uint8 RGB frames with shape `(N, H, W, 3)` where N is the number of frames, H and W match the original video dimensions, no header.
 
-Open a Pull Request with your submission and follow the template instructions to be evaluated. If your submission includes a working compression script, and is competitive we'll merge it into the repo. Otherwise, only the leaderboard will be updated with your score and a link to your PR.
+See [submissions/baseline/](submissions/baseline/) or [submissions/baseline_fast/](submissions/baseline_fast/) for working examples, and  `./evaluate.sh` for how the evaluation process works.
 
-See [submissions/baseline/](submissions/baseline/) or [submissions/baseline_fast/](submissions/baseline_fast/) for working examples.
+Open a Pull Request with your submission and follow the template instructions to be evaluated. If your submission includes a working compression script, and is competitive we'll merge it into the repo. Otherwise, only the leaderboard will be updated with your score and a link to your PR.
 
 Note that the evaluation has a time limit of 30 minutes. If your inflation script requires a GPU, it will run on a T4 GPU instance (RAM: 26GB, VRAM: 16GB), if it doesn't it will run on a CPU instance (CPU: 4, RAM: 16GB).
 
@@ -110,9 +108,9 @@ bash evaluate.sh --submission-dir ./submissions/baseline --device cpu|cuda|mps
 ### rules
 
 - External libraries and tools can be used and won't count towards compressed size, unless they use large artifacts (neural networks, meshes, point clouds, etc.).
+- `inflate.sh` should not consume anything outside of the submission directory and the extracted archive.
 - You can use anything for compression, including the models and the original uncompressed videos.
 - You may include your compression script in the submission, but it's not required.
-- `inflate.sh` should not consume anything outside of the submission directory and the extracted archive.
 
 ## leaderboard
 
