@@ -11,7 +11,7 @@ def main():
   parser.add_argument("--num-threads", type=int, default=2, help="DALI worker threads")
   parser.add_argument("--prefetch-queue-depth", type=int, default=4, help="DALI prefetch depth")
   parser.add_argument("--submission-dir", type=Path, default=Path('./submissions/baseline/'), help="compressed videos path")
-  parser.add_argument("--uncompressed-dir", type=Path, default=Path('./test_videos/'), help="original uncompressed videos path")
+  parser.add_argument("--uncompressed-dir", type=Path, default=Path('./videos/'), help="original uncompressed videos path")
   parser.add_argument("--seed", type=int, default=1234, help="RNG seed")
   parser.add_argument("--device", type=str, default=None, help="device: 'cpu', 'cuda', or 'mps' (default: auto-detect)")
   parser.add_argument("--report", type=Path, default=Path("./report.txt"), help="output report file path")
@@ -94,8 +94,8 @@ def main():
         f"=== Evaluation results over {batch_sizes:.0f} samples ===",
         f"  Average PoseNet Distortion: {posenet_dist:.8f}",
         f"  Average SegNet Distortion: {segnet_dist:.8f}",
-        f"  Submission file size: {compressed_size} bytes",
-        f"  Original uncompressed size: {uncompressed_size} bytes",
+        f"  Submission file size: {compressed_size:,} bytes",
+        f"  Original uncompressed size: {uncompressed_size:,} bytes",
         f"  Compression Rate: {rate:.8f}",
         f"  Final score: 100*segnet_dist + √(10*posenet_dist) + 25*rate = {score:.2f}"
       ]

@@ -261,10 +261,9 @@ if __name__ == "__main__":
   else:
     device = torch.device('cpu')
   files = (HERE / 'public_test_video_names.txt').read_text().splitlines()
-  fmt = 'hevc'
-  uncompressed_data_dir = Path('./test_videos/')
+  uncompressed_data_dir = Path('./videos/')
   DsClaas = DaliVideoDataset if device.type == 'cuda' else AVVideoDataset
-  ds = DsClaas(files, data_dir=uncompressed_data_dir, batch_size=batch_size, device=device, format=fmt)
+  ds = DsClaas(files, data_dir=uncompressed_data_dir, batch_size=batch_size, device=device)
   ds.prepare_data()
   for i, (path, idx, batch) in enumerate(ds):
     assert list(batch.shape)[1:] == [seq_len, camera_size[1], camera_size[0], 3], f"unexpected batch shape: {batch.shape}"

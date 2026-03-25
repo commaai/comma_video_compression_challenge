@@ -50,7 +50,8 @@ bash "${SUBMISSION_DIR}/inflate.sh" "$ARCHIVE_DIR" "$INFLATED_DIR" "$VIDEO_NAMES
 MISSING=0
 while IFS= read -r line; do
   [ -z "$line" ] && continue
-  RAW_PATH="${INFLATED_DIR}/$(dirname "$line")/video.raw"
+  BASE="${line%.*}"
+  RAW_PATH="${INFLATED_DIR}/${BASE}.raw"
   if [ ! -f "$RAW_PATH" ]; then
     echo "ERROR: missing inflated file: ${RAW_PATH}" >&2
     MISSING=$((MISSING + 1))
@@ -67,7 +68,7 @@ echo "All videos inflated to ${INFLATED_DIR}"
 # evaluate
 python "$HERE/evaluate.py" \
   --submission-dir "$SUBMISSION_DIR" \
-  --uncompressed-dir "$HERE/test_videos" \
+  --uncompressed-dir "$HERE/videos" \
   --report "$SUBMISSION_DIR/report.txt" \
   --video-names-file "$VIDEO_NAMES_FILE" \
   --device "$DEVICE"

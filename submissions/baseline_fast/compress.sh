@@ -4,7 +4,7 @@ set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PD="$(cd "${HERE}/../.." && pwd)"
 
-IN_DIR="${PD}/test_videos"
+IN_DIR="${PD}/videos"
 VIDEO_NAMES_FILE="${PD}/public_test_video_names.txt"
 ARCHIVE_DIR="${HERE}/archive"
 JOBS="1"
@@ -34,17 +34,17 @@ head -n "$(wc -l < "$VIDEO_NAMES_FILE")" "$VIDEO_NAMES_FILE" | xargs -P"$JOBS" -
   [[ -z "$rel" ]] && exit 0
 
   IN="${IN_DIR}/${rel}"
-  OUT="${ARCHIVE_DIR}/$(dirname "$rel")"
-  mkdir -p "$OUT"
+  BASE="${rel%.*}"
+  OUT="${ARCHIVE_DIR}/${BASE}.mkv"
 
-  echo "→ ${IN}  →  ${OUT}/video.mkv"
+  echo "→ ${IN}  →  ${OUT}"
 
   ffmpeg -nostdin -y -hide_banner -loglevel warning \
     -r 20 -fflags +genpts -i "$IN" \
     -vf "scale=trunc(iw*0.45/2)*2:trunc(ih*0.45/2)*2:flags=lanczos" \
     -c:v libx265 -preset ultrafast -crf 30 \
     -g 1 -bf 0 -x265-params "keyint=1:min-keyint=1:scenecut=0:frame-threads=4:log-level=warning" \
-    -r 20 "$OUT"/video.mkv
+    -r 20 "$OUT"
 ' _ {}
 
 # zip archive

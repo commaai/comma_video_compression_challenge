@@ -21,7 +21,7 @@ while IFS= read -r line; do
 
   [ ! -f "$SRC" ] && echo "ERROR: ${SRC} not found" >&2 && exit 1
 
-  printf "Decoding + resizing %s ... " "$line"
+  printf "Decoding %s ... " "$line"
   cd "$ROOT"
-  python -m submissions.baseline_fast.inflate "$SRC" "$DST"
+  python -m submissions.no_compress.inflate "$SRC" "$DST"
 done < "$FILE_LIST"
