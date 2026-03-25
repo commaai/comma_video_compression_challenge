@@ -74,6 +74,6 @@ def decode_apply_ar_to_file(video_path: str, dst: str, archive_dir: str):
 if __name__ == '__main__':
   video_path = sys.argv[1]
   dst = sys.argv[2]
-  archive_dir = str(Path(video_path).parent)
+  archive_dir = sys.argv[3] if len(sys.argv) > 3 else str(Path(video_path).parent)
   n = decode_apply_ar_to_file(video_path, dst, archive_dir)
   print(f"saved {n} frames")

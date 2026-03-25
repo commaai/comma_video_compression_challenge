@@ -11,13 +11,14 @@ FILE_LIST="$3"
 cd "$ROOT"
 source .venv/bin/activate
 
+mkdir -p "$OUTPUT_DIR"
+
 while IFS= read -r line; do
   [ -z "$line" ] && continue
-  SRC="${DATA_DIR}/$(dirname "$line")/video.mkv"
-  DST="${OUTPUT_DIR}/$(dirname "$line")/video.raw"
-  ARCHIVE_DIR="${DATA_DIR}/$(dirname "$line")"
-  mkdir -p "$(dirname "$DST")"
+  BASE="${line%.*}"
+  SRC="${DATA_DIR}/${BASE}.mkv"
+  DST="${OUTPUT_DIR}/${BASE}.raw"
   [ ! -f "$SRC" ] && echo "ERROR: ${SRC} not found" >&2 && exit 1
   printf "Inflating %s … " "$line"
-  python -m submissions.sweet_codec.inflate "$SRC" "$DST" "$ARCHIVE_DIR"
+  python -m submissions.sweet_codec.inflate "$SRC" "$DST" "$DATA_DIR"
 done < "$FILE_LIST"
