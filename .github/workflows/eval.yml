@@ -101,6 +101,8 @@ jobs:
     needs: test
     if: always() && inputs.pr_number
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v4
