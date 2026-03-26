@@ -1,4 +1,17 @@
-# comma video compression challenge
+<div align="center">
+<h1>comma video compression challenge</h1>
+
+<h3>
+  <a href="https://comma.ai/leaderboard">Leaderboard</a>
+  <span> · </span>
+  <a href="https://comma.ai/jobs">comma.ai/jobs</a>
+  <span> · </span>
+  <a href="https://discord.comma.ai">Discord</a>
+  <span> · </span>
+  <a href="https://x.com/comma_ai">X</a>
+</h3>
+
+</div>
 
  `./videos/0.mkv` is a 1 minute 35.8 MB dashcam video. Make it as small as possible while preserving semantic content and temporal dynamics.
 
