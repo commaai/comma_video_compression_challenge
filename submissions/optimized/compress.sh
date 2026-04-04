@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# Score: 2.05 — SVT-AV1 with quantization matrices + film-grain denoise
-# Key: 50% lanczos, CRF 34, GOP 240, enable-qm=1:qm-min=0, fg=22
+# Best: 45% lanczos, CRF 32, GOP 240, enable-qm=1:qm-min=0, fg=22
 set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -31,8 +30,8 @@ while IFS= read -r rel; do
 
   ffmpeg -nostdin -y -hide_banner -loglevel warning \
     -r 20 -fflags +genpts -i "$IN" \
-    -vf "scale=trunc(iw*0.50/2)*2:trunc(ih*0.50/2)*2:flags=lanczos" \
-    -c:v libsvtav1 -preset 0 -crf 34 -g 240 \
+    -vf "scale=trunc(iw*0.45/2)*2:trunc(ih*0.45/2)*2:flags=lanczos" \
+    -c:v libsvtav1 -preset 0 -crf 32 -g 240 \
     -svtav1-params "film-grain=22:film-grain-denoise=1:enable-qm=1:qm-min=0" \
     -pix_fmt yuv420p \
     -r 20 "$OUT"
