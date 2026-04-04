@@ -17,7 +17,7 @@ mkdir -p "$OUTPUT_DIR"
 while IFS= read -r line; do
   [ -z "$line" ] && continue
   BASE="${line%.*}"
-  SRC="${DATA_DIR}/${BASE}.ivf"
+  SRC="${DATA_DIR}/${BASE}.mkv"
   DST="${OUTPUT_DIR}/${BASE}.raw"
 
   [ ! -f "$SRC" ] && echo "ERROR: ${SRC} not found" >&2 && exit 1
