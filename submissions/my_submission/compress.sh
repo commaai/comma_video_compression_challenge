@@ -43,7 +43,7 @@ head -n "$(wc -l < "$VIDEO_NAMES_FILE")" "$VIDEO_NAMES_FILE" | xargs -P"$JOBS" -
     -r 20 -fflags +genpts -i "$IN" \
     -vf "scale=trunc(iw*0.45/2)*2:trunc(ih*0.45/2)*2:flags=lanczos" \
     -pix_fmt yuv420p -c:v libsvtav1 -preset 0 -crf 33 \
-    -svtav1-params "film-grain=22:keyint=180:scd=0" \
+    -svtav1-params "film-grain=22:keyint=180:scd=0:sharpness=1" \
     -r 20 "$OUT"
 ' _ {}
 
