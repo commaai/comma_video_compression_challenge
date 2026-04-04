@@ -44,9 +44,10 @@ def unsharp_mask(x, sigma=1.5, strength=0.3):
   gx = g.view(1, 1, 1, -1).expand(C, -1, -1, -1)
   gy = g.view(1, 1, -1, 1).expand(C, -1, -1, -1)
 
-  pad_x = ksize // 2
-  blurred = F.conv2d(F.pad(x, [pad_x]*4, mode='reflect'), gx, groups=C)
-  blurred = F.conv2d(F.pad(blurred, [pad_x]*4, mode='reflect'), gy, groups=C)
+  p = ksize // 2
+  # Separable: horizontal blur then vertical blur
+  blurred = F.conv2d(F.pad(x, [p, p, 0, 0], mode='reflect'), gx, groups=C)
+  blurred = F.conv2d(F.pad(blurred, [0, 0, p, p], mode='reflect'), gy, groups=C)
 
   # Unsharp mask: original + strength * (original - blurred)
   sharpened = x + strength * (x - blurred)
