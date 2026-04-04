@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+"""Decode compressed AV1 video and upscale to original resolution."""
 import av, torch, sys
 import torch.nn.functional as F
 from frame_utils import camera_size, yuv420_to_rgb

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Score: 2.05 — SVT-AV1 with quantization matrices (novel) + film-grain denoise
+# Score: 2.05 — SVT-AV1 with quantization matrices + film-grain denoise
+# Key: 50% lanczos, CRF 34, GOP 240, enable-qm=1:qm-min=0, fg=22
 set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
