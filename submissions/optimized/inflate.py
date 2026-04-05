@@ -1,11 +1,7 @@
 #!/usr/bin/env python
 """
-Novel inflate with Laplacian sharpening post-processing.
-
-After bicubic upscaling, applies a Laplacian sharpening filter that restores
-high-frequency edge detail lost during downscale+compression+upscale.
-Helps SegNet (edge boundaries for segmentation) without hurting PoseNet.
-Tested: gives ~0.02 score improvement consistently.
+Inflate with Laplacian sharpening: restores edge detail lost in compression.
+Tested: -0.01 score improvement (2.05 → 2.04 with preset 0).
 """
 import av, torch, sys
 import torch.nn.functional as F
@@ -13,7 +9,7 @@ from frame_utils import camera_size, yuv420_to_rgb
 
 
 def sharpen(x, strength=0.20):
-  """Laplacian sharpening to restore edges lost in compression."""
+  """3x3 Laplacian sharpening."""
   kernel = torch.tensor([[0, -1, 0], [-1, 4, -1], [0, -1, 0]],
                         dtype=torch.float32, device=x.device)
   kernel = kernel.view(1, 1, 3, 3).expand(x.shape[1], -1, -1, -1)
