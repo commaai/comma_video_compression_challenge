@@ -1,0 +1,6 @@
+{
+  "unsharp": true,
+  "unsharp_kernel": 9,
+  "unsharp_sigma": 2.0,
+  "unsharp_amount": 0.85
+}
