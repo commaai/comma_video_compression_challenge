@@ -33,7 +33,7 @@
 - 2nd place: [$500] + special swag
 - 3rd place: [$250] + special swag
 - Best write-up (visualizations, patterns, etc.): [comma four OR $1,000] + special swag
-  
+
 ## quickstart
 Clone the repo
 ```
@@ -121,16 +121,192 @@ The official evaluation has a time limit of 30 minutes. If your inflation script
 
 ## leaderboard (lower is better)
 
-| Name     | Score | PR |
-| -------- |:-------:| -------- |
-| svtav1_cheetah | 2.1 |https://github.com/commaai/comma_video_compression_challenge/pull/24 |
-| av1_sharp1_adaptive | 2.1 |https://github.com/commaai/comma_video_compression_challenge/pull/23 |
-| svtav1_45pct_unsharp | 2.1 |https://github.com/commaai/comma_video_compression_challenge/pull/20 |
-| svt_av1_lanczos_fg | 2.2  | https://github.com/commaai/comma_video_compression_challenge/pull/18 |
-| h265_g16_512x384_veryslow | 2.6  | https://github.com/commaai/comma_video_compression_challenge/pull/21 |
-| h265_tuned | 3.3  | https://github.com/commaai/comma_video_compression_challenge/pull/22 |
-| baseline_fast | 4.4     | |
-| no_compress | 25.0     | |
+<!-- TABLE-START -->
+<table class="ranked">
+ <thead>
+  <tr>
+   <th>
+   </th>
+   <th>
+    score
+   </th>
+   <th>
+    name
+   </th>
+   <th>
+    link
+   </th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td>
+   </td>
+   <td>
+    1.98
+   </td>
+   <td>
+    damir_bearclaw_002
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/30" target="_blank">
+     #30
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    2.05
+   </td>
+   <td>
+    svtav1_cheetah
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/24" target="_blank">
+     #24
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    2.07
+   </td>
+   <td>
+    svtav1_45pct_unsharp20_direct
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/27" target="_blank">
+     #27
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    2.08
+   </td>
+   <td>
+    svtav1_gop360_binomial_unsharp
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/26" target="_blank">
+     #26
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    2.08
+   </td>
+   <td>
+    av1_sharp1_adaptive
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/23" target="_blank">
+     #23
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    2.09
+   </td>
+   <td>
+    svtav1_45pct_unsharp
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/20" target="_blank">
+     #20
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    2.20
+   </td>
+   <td>
+    svt_av1_lanczos_fg
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/18" target="_blank">
+     #18
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    2.55
+   </td>
+   <td>
+    h265_g16_512x384_veryslow
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/21" target="_blank">
+     #21
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    3.32
+   </td>
+   <td>
+    h265_tuned
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/22" target="_blank">
+     #22
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    4.39
+   </td>
+   <td>
+    baseline_fast
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/tree/3e91fd50585789e50a636479ae80f4f877c5e2ac/submissions/baseline_fast" target="_blank">
+     #1
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    25.0
+   </td>
+   <td>
+    no_compress
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/tree/3e91fd50585789e50a636479ae80f4f877c5e2ac/submissions/no_compress" target="_blank">
+     #0
+    </a>
+   </td>
+  </tr>
+ </tbody>
+</table>
+<!-- TABLE-END -->
 
 > mirrored from [comma.ai/leaderboard](https://comma.ai/leaderboard)
 
