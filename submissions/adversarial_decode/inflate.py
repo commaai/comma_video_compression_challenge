@@ -397,7 +397,19 @@ def main():
     print(f"Loaded ideal class colors")
 
     if device.type == 'cuda':
-        batch_size = 16
+        import subprocess
+        try:
+            result = subprocess.run(['nvidia-smi', '--query-gpu=memory.total', '--format=csv,noheader,nounits'],
+                                    capture_output=True, text=True)
+            vram_mb = int(result.stdout.strip().split('\n')[0])
+            if vram_mb >= 20000:
+                batch_size = 16
+            elif vram_mb >= 12000:
+                batch_size = 8
+            else:
+                batch_size = 4
+        except Exception:
+            batch_size = 4
     else:
         batch_size = 2
 
