@@ -1,14 +1,5 @@
 #!/usr/bin/env python
-"""
-Phase 2 Decoder: Adversarial decode via evaluation network inversion.
-
-Loads compressed SegNet/PoseNet targets from archive, then runs gradient
-descent through the evaluation networks to generate frames that reproduce
-the correct network outputs. Frames may look nothing like the original
-video -- they only need to fool SegNet and PoseNet.
-
-Usage: python -m submissions.adversarial_decode.inflate <data_dir> <output_path>
-"""
+"""Tensor Inversion Decoder."""
 import sys, struct, zlib, time, warnings
 import torch, numpy as np
 import torch.nn.functional as F

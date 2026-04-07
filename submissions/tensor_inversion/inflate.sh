@@ -32,7 +32,7 @@ while IFS= read -r line; do
 
   [ ! -d "$SRC_DIR" ] && echo "ERROR: ${SRC_DIR} not found" >&2 && exit 1
 
-  printf "Inflating %s via adversarial decode ... " "$line"
+  printf "Inflating %s via tensor inversion ... " "$line"
   cd "$ROOT"
   "$PYTHON" -m "submissions.${SUB_NAME}.inflate" "$SRC_DIR" "$DST"
 done < "$FILE_LIST"

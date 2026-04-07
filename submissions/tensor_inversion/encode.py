@@ -1,11 +1,5 @@
 #!/usr/bin/env python
-"""
-Phase 2 Encoder: Extract SegNet argmax maps and PoseNet pose vectors
-from the original video, delta-encode, compress, and compute ideal
-class colors for initialization at decode time.
-
-Usage: python -m submissions.adversarial_decode.encode <video_path> <output_dir>
-"""
+"""Tensor Inversion Encoder."""
 import sys, struct, bz2, time
 import torch, einops, numpy as np
 from pathlib import Path

@@ -45,7 +45,7 @@ while IFS= read -r line; do
 
   echo "→ Encoding ${line} → ${OUTPUT_SUBDIR}"
   cd "$ROOT"
-  "$PYTHON" -m submissions.adversarial_decode.encode "$VIDEO_PATH" "$OUTPUT_SUBDIR"
+  "$PYTHON" -m submissions.tensor_inversion.encode "$VIDEO_PATH" "$OUTPUT_SUBDIR"
 done < "$VIDEO_NAMES_FILE"
 
 cd "$ARCHIVE_DIR"
