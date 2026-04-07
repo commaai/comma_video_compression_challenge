@@ -118,6 +118,7 @@ The official evaluation has a time limit of 30 minutes. If your inflation script
 - External libraries and tools can be used and won't count towards compressed size, unless they use large artifacts (neural networks, meshes, point clouds, etc.), in which case those artifacts should be included in the archive and will count towards the compressed size. This applies to the PoseNet and SegNet.
 - You can use anything for compression, including the models, original uncompressed video, and any other assets you want to include.
 - Submissions are done via public Pull Requests. You may include your compression script in the submission, but it's not required.
+- Final ranking will be based on the public leaderboard, no private testing will be performed.
 
 ## leaderboard (lower is better)
 
