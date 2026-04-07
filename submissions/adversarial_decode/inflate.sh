@@ -9,6 +9,19 @@ DATA_DIR="$1"
 OUTPUT_DIR="$2"
 FILE_LIST="$3"
 
+# Detect Python — prefer UV-managed, fallback to venv, fallback to system
+UV_PYTHON="/home/amogh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11"
+if [ -x "$UV_PYTHON" ]; then
+  PYTHON="$UV_PYTHON"
+  export PYTHONPATH="${ROOT}:${ROOT}/.venv/lib/python3.11/site-packages"
+elif [ -x "${ROOT}/.venv/bin/python3" ]; then
+  PYTHON="${ROOT}/.venv/bin/python3"
+  export PYTHONPATH="${ROOT}"
+else
+  PYTHON="python"
+  export PYTHONPATH="${ROOT}"
+fi
+
 mkdir -p "$OUTPUT_DIR"
 
 while IFS= read -r line; do
@@ -21,5 +34,5 @@ while IFS= read -r line; do
 
   printf "Inflating %s via adversarial decode ... " "$line"
   cd "$ROOT"
-  python -m "submissions.${SUB_NAME}.inflate" "$SRC_DIR" "$DST"
+  "$PYTHON" -m "submissions.${SUB_NAME}.inflate" "$SRC_DIR" "$DST"
 done < "$FILE_LIST"

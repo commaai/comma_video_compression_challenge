@@ -21,6 +21,19 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+# Detect Python — prefer UV-managed, fallback to venv, fallback to system
+UV_PYTHON="/home/amogh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11"
+if [ -x "$UV_PYTHON" ]; then
+  PYTHON="$UV_PYTHON"
+  export PYTHONPATH="${ROOT}:${ROOT}/.venv/lib/python3.11/site-packages"
+elif [ -x "${ROOT}/.venv/bin/python3" ]; then
+  PYTHON="${ROOT}/.venv/bin/python3"
+  export PYTHONPATH="${ROOT}"
+else
+  PYTHON="python"
+  export PYTHONPATH="${ROOT}"
+fi
+
 rm -rf "$ARCHIVE_DIR"
 mkdir -p "$ARCHIVE_DIR"
 
@@ -32,7 +45,7 @@ while IFS= read -r line; do
 
   echo "→ Encoding ${line} → ${OUTPUT_SUBDIR}"
   cd "$ROOT"
-  python -m submissions.adversarial_decode.encode "$VIDEO_PATH" "$OUTPUT_SUBDIR"
+  "$PYTHON" -m submissions.adversarial_decode.encode "$VIDEO_PATH" "$OUTPUT_SUBDIR"
 done < "$VIDEO_NAMES_FILE"
 
 cd "$ARCHIVE_DIR"
