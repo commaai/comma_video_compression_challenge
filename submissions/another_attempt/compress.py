@@ -34,8 +34,8 @@ import torch.nn.functional as F
 
 # Performance optimizations for high-end GPUs (e.g. RTX 3090, 4090, 5090)
 torch.backends.cudnn.benchmark = True
-torch.backends.cuda.matmul.allow_tf32 = True
-torch.backends.cudnn.allow_tf32 = True
+torch.backends.cuda.matmul.fp32_precision = 'tf32'
+torch.backends.cudnn.conv.fp32_precision = 'tf32'
 torch.set_float32_matmul_precision('high')
 
 import einops
@@ -259,13 +259,13 @@ def extract_and_compress_masks(rgb_pairs_all, segnet, device, archive_dir, batch
         "-s", f"{W}x{H}", "-r", "10",
         "-i", str(raw_path),
         "-c:v", "libaom-av1",
-        "-lossless", "1",          # lossless encoding — key improvement
-        "-cpu-used", "0",          # maximum compression effort
+        "-crf", "0", "-b:v", "0",
+        "-cpu-used", "4",
         "-row-mt", "1",
-        "-g", "600",               # single GOP for maximum inter-prediction
+        "-g", "600",
         "-keyint_min", "600",
         "-lag-in-frames", "48",
-        "-aom-params", "enable-cdef=0:enable-intrabc=1:enable-obmc=0:enable-palette=1",
+        "-aom-params", "lossless=1:enable-cdef=0:enable-intrabc=1:enable-obmc=0:enable-palette=1",
         "-f", "obu",
         str(obu_path),
     ]
