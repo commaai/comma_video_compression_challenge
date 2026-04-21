@@ -166,30 +166,43 @@ def container_frame_count(path):
     return n
 
 def preload_video_pair_cache_dali(file_names, data_dir, batch_size, device, num_threads=4, prefetch_queue_depth=4):
-    logging.info("Preloading RGB pairs via PyAV...")
-    all_frames = []
+    logging.info("Preloading RGB pairs via DALI...")
+    import nvidia.dali.fn as fn
+    from nvidia.dali import pipeline_def
+    from nvidia.dali.plugin.pytorch import DALIGenericIterator
+    from nvidia.dali.plugin.base_iterator import LastBatchPolicy
+    warnings.filterwarnings("ignore", category=Warning, module=r"nvidia\.dali\.plugin\.base_iterator")
+
+    @pipeline_def
+    def pipe():
+        return fn.experimental.inputs.video(name="inbuf", sequence_length=SEQ_LEN,
+                                             device="mixed", no_copy=True, blocking=False,
+                                             last_sequence_policy="pad")
+
+    all_batches = []
     for fnm in file_names:
         path = str(data_dir / fnm)
-        container = av.open(path)
-        vid = container.streams.video[0]
-        vid.thread_type = "AUTO"
-        frames_this_file = []
-        for frame in container.decode(vid):
-            arr = frame.to_ndarray(format="rgb24")
-            frames_this_file.append(arr)
-        container.close()
-        n_complete = (len(frames_this_file) // SEQ_LEN) * SEQ_LEN
-        if n_complete == 0:
-            logging.warning(f"Skipping {fnm}: fewer than {SEQ_LEN} frames")
-            continue
-        stacked = np.stack(frames_this_file[:n_complete], axis=0)
-        stacked = stacked.reshape(n_complete // SEQ_LEN, SEQ_LEN, *stacked.shape[1:])
-        stacked = np.transpose(stacked, (0, 1, 4, 2, 3))  # (B, SEQ_LEN, 3, H, W)
-        all_frames.append(torch.from_numpy(stacked))
+        f  = open(path, "rb")
+        mm = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
+        mv = memoryview(mm)
+        fc = hevc_frame_count(path) if path.endswith(".hevc") else container_frame_count(path)
+        it_size = math.ceil((fc // SEQ_LEN) / batch_size)
+        p = pipe(batch_size=batch_size, num_threads=num_threads,
+                 device_id=device.index or 0, prefetch_queue_depth=prefetch_queue_depth)
+        p.build()
+        p.feed_input("inbuf", [mv])
+        it = DALIGenericIterator([p], output_map=["video"], auto_reset=False,
+                                 last_batch_policy=LastBatchPolicy.PARTIAL)
+        try:
+            for _ in range(it_size):
+                all_batches.append(next(it)[0]["video"].cpu().contiguous())
+        finally:
+            torch.cuda.synchronize()
+            it.reset(); del it, p; mv.release(); mm.close(); f.close()
 
-    if not all_frames:
+    if not all_batches:
         raise RuntimeError("No video data loaded.")
-    return torch.cat(all_frames, dim=0).contiguous()
+    return torch.cat(all_batches, dim=0).contiguous()
 
 # ─── Mask extraction & compression ──────────────────────────────────────────
 def extract_and_compress_masks(rgb_pairs_all, segnet, device, archive_dir, batch_size=8):
