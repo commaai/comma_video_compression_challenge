@@ -11,6 +11,8 @@ import torch.nn.functional as F
 
 CAMERA_SIZE = (1164, 874)
 SEGMAP_INPUT_SIZE = (512, 384)
+CLASS_TARGETS = [0, 255, 64, 192, 128]
+LUT_SIGMA = 15.0
 
 
 class ResidualBlock(nn.Module):
@@ -157,6 +159,14 @@ def reconstruct_weight(payload: dict, state: dict, prefix: str) -> torch.Tensor:
     return qint * (2 ** exponents)
 
 
+def create_gaussian_softmax_lut() -> torch.Tensor:
+    x = torch.arange(256, dtype=torch.float32).unsqueeze(1)
+    targets = torch.tensor(CLASS_TARGETS, dtype=torch.float32).unsqueeze(0)
+    squared_diff = (x - targets) ** 2
+    logits = torch.exp(-squared_diff / (2 * LUT_SIGMA**2))
+    return F.softmax(logits, dim=1)
+
+
 def load_segmap(checkpoint_path: Path, device: torch.device) -> SegMap:
     payload = torch.load(checkpoint_path, map_location="cpu")
     if payload.get("learned_fullres_residual", False):
@@ -201,7 +211,7 @@ def load_segmap(checkpoint_path: Path, device: torch.device) -> SegMap:
 def inflate_to_raw(data_dir: Path, video_name: str, dst_path: Path) -> None:
     device = torch.device("cuda", 0) if torch.cuda.is_available() else torch.device("cpu")
     model = load_segmap(data_dir / "segmap_inference.pt", device)
-    lut = torch.load(data_dir / "segnet_probability_lut.pt", map_location=device)
+    lut = create_gaussian_softmax_lut().to(device)
     src_video = data_dir / video_name
     container = av.open(str(src_video))
     stream = container.streams.video[0]
