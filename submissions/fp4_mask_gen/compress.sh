@@ -4,7 +4,7 @@ set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ARCHIVE_DIR="${HERE}/archive"
 
-echo "Starting another_attempt compression pipeline..."
+echo "Starting fp4_mask_gen compression pipeline..."
 python3 "${HERE}/compress.py" "$@"
 
 echo "Packaging archive..."
