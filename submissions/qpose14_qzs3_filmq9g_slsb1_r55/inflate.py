@@ -6,7 +6,18 @@ import tempfile
 from pathlib import Path
 
 import av
-import brotli
+try:
+    import brotli
+except ImportError:
+    class _BrotliCompat:
+        @staticmethod
+        def decompress(*args, **kwargs):
+            raise RuntimeError(
+                "Brotli decompression was requested, but the optional 'brotli' package "
+                "is not installed in this environment."
+            )
+
+    brotli = _BrotliCompat()
 import einops
 import numpy as np
 import torch
