@@ -696,12 +696,36 @@ def seg_tile_action_specs(device: torch.device):
 def load_seg_tile_actions_data(data: bytes, device: torch.device):
     raw = brotli.decompress(data)
     records = []
+    def read_uvarint(cursor: int):
+        shift = 0
+        value = 0
+        while True:
+            byte = raw[cursor]
+            cursor += 1
+            value |= (byte & 0x7F) << shift
+            if byte < 0x80:
+                return value, cursor
+            shift += 7
+
     if raw.startswith(b"TA4"):
         raw = raw[3:]
         record_width = 4
     elif raw.startswith(b"TA5"):
         raw = raw[3:]
         record_width = 5
+    elif raw.startswith(b"SG2") or (len(raw) % 4 != 0 and len(raw) % 5 != 0):
+        cursor = 3 if raw.startswith(b"SG2") else 0
+        while cursor < len(raw):
+            tile, cursor = read_uvarint(cursor)
+            count, cursor = read_uvarint(cursor)
+            frame = 0
+            for idx in range(count):
+                delta, cursor = read_uvarint(cursor)
+                frame = delta if idx == 0 else frame + delta
+                action = raw[cursor]
+                cursor += 1
+                records.append((frame, tile, action))
+        record_width = 0
     elif len(raw) % 4 == 0 and len(raw) % 5 != 0:
         record_width = 4
     elif len(raw) % 5 == 0 and len(raw) % 4 != 0:
@@ -824,7 +848,7 @@ def main():
             cursor += mask_len
             model_br_data = payload[cursor : cursor + model_br_len]
             pose_q_br_data = payload[cursor + model_br_len:]
-        elif len(payload) in (276641, 276520, 276362):
+        elif len(payload) in (276641, 276520, 276362, 276381, 276379):
             mask_br_len = 219472
             if len(payload) == 276641:
                 model_br_len = 56034
@@ -832,7 +856,12 @@ def main():
                 model_br_len = 55914
             else:
                 model_br_len = 55756
-            actions_len = 236
+            if len(payload) == 276381:
+                actions_len = 255
+            elif len(payload) == 276379:
+                actions_len = 253
+            else:
+                actions_len = 236
             cursor = 0
             mask_br_data = payload[cursor : cursor + mask_br_len]
             cursor += mask_br_len
