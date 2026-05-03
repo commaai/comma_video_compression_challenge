@@ -824,9 +824,14 @@ def main():
             cursor += mask_len
             model_br_data = payload[cursor : cursor + model_br_len]
             pose_q_br_data = payload[cursor + model_br_len:]
-        elif len(payload) in (276641, 276520):
+        elif len(payload) in (276641, 276520, 276362):
             mask_br_len = 219472
-            model_br_len = 56034 if len(payload) == 276641 else 55914
+            if len(payload) == 276641:
+                model_br_len = 56034
+            elif len(payload) == 276520:
+                model_br_len = 55914
+            else:
+                model_br_len = 55756
             actions_len = 236
             cursor = 0
             mask_br_data = payload[cursor : cursor + mask_br_len]
