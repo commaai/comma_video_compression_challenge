@@ -787,11 +787,17 @@ def main():
 
     if packed_payload.exists():
         payload = packed_payload.read_bytes()
-        if len(payload) == 276641:
-            mask_br_data = payload[:219472]
-            model_br_data = payload[219472:275506]
-            embedded_seg_tile_actions = payload[275506:275742]
-            pose_q_br_data = payload[275742:]
+        if len(payload) in (276641, 276520):
+            mask_br_len = 219472
+            model_br_len = 56034 if len(payload) == 276641 else 55914
+            actions_len = 236
+            cursor = 0
+            mask_br_data = payload[cursor : cursor + mask_br_len]
+            cursor += mask_br_len
+            model_br_data = payload[cursor : cursor + model_br_len]
+            cursor += model_br_len
+            embedded_seg_tile_actions = payload[cursor : cursor + actions_len]
+            pose_q_br_data = payload[cursor + actions_len:]
         elif payload.startswith(b"P3"):
             mask_len, model_br_len, actions_len = struct.unpack_from("<IHH", payload, 2)
             cursor = 10
