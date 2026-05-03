@@ -696,20 +696,41 @@ def seg_tile_action_specs(device: torch.device):
 def load_seg_tile_actions_data(data: bytes, device: torch.device):
     raw = brotli.decompress(data)
     records = []
-    if len(raw) % 4 == 0:
+    if raw.startswith(b"TA4"):
+        raw = raw[3:]
+        record_width = 4
+    elif raw.startswith(b"TA5"):
+        raw = raw[3:]
+        record_width = 5
+    elif len(raw) % 4 == 0 and len(raw) % 5 != 0:
+        record_width = 4
+    elif len(raw) % 5 == 0 and len(raw) % 4 != 0:
+        record_width = 5
+    elif not raw:
+        record_width = 4
+    else:
+        raise ValueError(f"ambiguous seg tile action payload length without TA4/TA5 header: {len(raw)}")
+
+    if record_width == 4:
         for i in range(0, len(raw), 4):
             frame = int.from_bytes(raw[i:i + 2], "little")
             tile = raw[i + 2]
             action = raw[i + 3]
             records.append((frame, tile, action))
-    elif len(raw) % 5 == 0:
+    elif record_width == 5:
         for i in range(0, len(raw), 5):
             frame = int.from_bytes(raw[i:i + 2], "little")
             tile = int.from_bytes(raw[i + 2:i + 4], "little")
             action = raw[i + 4]
             records.append((frame, tile, action))
-    else:
-        raise ValueError(f"unsupported seg tile action payload length: {len(raw)}")
+
+    action_count = seg_tile_action_specs(device).shape[0]
+    for frame, tile, action in records:
+        if not (0 <= frame < 600):
+            raise ValueError(f"seg tile action frame out of range: {frame}")
+        if action >= action_count:
+            raise ValueError(f"seg tile action index out of range: {action}")
+
     by_frame = {}
     for frame, tile, action in records:
         by_frame.setdefault(frame, []).append((tile, action))
@@ -787,18 +808,7 @@ def main():
 
     if packed_payload.exists():
         payload = packed_payload.read_bytes()
-        if len(payload) in (276641, 276520):
-            mask_br_len = 219472
-            model_br_len = 56034 if len(payload) == 276641 else 55914
-            actions_len = 236
-            cursor = 0
-            mask_br_data = payload[cursor : cursor + mask_br_len]
-            cursor += mask_br_len
-            model_br_data = payload[cursor : cursor + model_br_len]
-            cursor += model_br_len
-            embedded_seg_tile_actions = payload[cursor : cursor + actions_len]
-            pose_q_br_data = payload[cursor + actions_len:]
-        elif payload.startswith(b"P3"):
+        if payload.startswith(b"P3"):
             mask_len, model_br_len, actions_len = struct.unpack_from("<IHH", payload, 2)
             cursor = 10
             mask_br_data = payload[cursor : cursor + mask_len]
@@ -814,6 +824,17 @@ def main():
             cursor += mask_len
             model_br_data = payload[cursor : cursor + model_br_len]
             pose_q_br_data = payload[cursor + model_br_len:]
+        elif len(payload) in (276641, 276520):
+            mask_br_len = 219472
+            model_br_len = 56034 if len(payload) == 276641 else 55914
+            actions_len = 236
+            cursor = 0
+            mask_br_data = payload[cursor : cursor + mask_br_len]
+            cursor += mask_br_len
+            model_br_data = payload[cursor : cursor + model_br_len]
+            cursor += model_br_len
+            embedded_seg_tile_actions = payload[cursor : cursor + actions_len]
+            pose_q_br_data = payload[cursor + actions_len:]
         else:
             mask_br_data = payload[:219472]
             if 276430 <= len(payload) <= 276470:
@@ -852,8 +873,9 @@ def main():
 
     mask_frames_all = load_encoded_mask_video(tmp_obu_path)
     if mask_frames_all.shape[0] < 600:
-        repeat = int(np.ceil(600 / mask_frames_all.shape[0]))
-        mask_frames_all = mask_frames_all.repeat_interleave(repeat, dim=0)[:600].contiguous()
+        pad_count = 600 - mask_frames_all.shape[0]
+        tail = mask_frames_all[-1:].expand(pad_count, -1, -1, -1)
+        mask_frames_all = torch.cat([mask_frames_all, tail], dim=0).contiguous()
     os.remove(tmp_obu_path)
 
     # 3. Load Pose Vectors
