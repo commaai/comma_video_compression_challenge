@@ -1,0 +1,45 @@
+name: Update Leaderboard Table
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-leaderboard:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install pup
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip curl
+          curl -sL https://github.com/ericchiang/pup/releases/download/v0.4.0/pup_v0.4.0_linux_amd64.zip -o pup.zip
+          unzip pup.zip
+          chmod +x pup
+          sudo mv pup /usr/local/bin/
+
+      - name: Fetch remote leaderboard page
+        run: wget -qO page.html https://comma.ai/leaderboard
+
+      - name: Extract table
+        run: |
+          pup 'div#video_compression_challenge_table table' < page.html > table.html
+
+      - name: Splice HTML into README
+        run: |
+          awk '
+            /<!-- TABLE-START -->/ { print; system("cat table.html"); skip=1; next }
+            /<!-- TABLE-END -->/   { skip=0 }
+            skip==0               { print }
+          ' README.md > README.md.updated
+          mv README.md.updated README.md
+
+      - name: Commit & push if changed
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git diff --quiet || (git add README.md && git commit -m "ci: update leaderboard tables" && git push)

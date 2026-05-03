@@ -5,6 +5,8 @@ __pycache__/
 
 # C extensions
 *.so
+!lib/*.so
+!lib/*.so.*
 
 # Distribution / packaging
 .Python
@@ -15,6 +17,7 @@ downloads/
 eggs/
 .eggs/
 lib/
+!lib/
 lib64/
 parts/
 sdist/
@@ -115,6 +118,12 @@ ipython_config.py
 # pdm.lock
 # pdm.toml
 .pdm-python
+
+# Local challenge artifacts
+submissions/*/archive/
+submissions/*/inflated/
+submissions/*/archive.zip
+submissions/*/report.txt
 .pdm-build/
 
 # pixi
@@ -226,4 +235,3 @@ archive.zip
 archive/
 inflated/
 report.txt
-

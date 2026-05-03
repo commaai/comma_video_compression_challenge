@@ -33,7 +33,7 @@
 - 2nd place: [$500] + special swag
 - 3rd place: [$250] + special swag
 - Best write-up (visualizations, patterns, etc.): [comma four OR $1,000] + special swag
-  
+
 ## quickstart
 Clone the repo
 ```
@@ -117,14 +117,469 @@ The official evaluation has a time limit of 30 minutes. If your inflation script
 
 - External libraries and tools can be used and won't count towards compressed size, unless they use large artifacts (neural networks, meshes, point clouds, etc.), in which case those artifacts should be included in the archive and will count towards the compressed size. This applies to the PoseNet and SegNet.
 - You can use anything for compression, including the models, original uncompressed video, and any other assets you want to include.
-- You may include your compression script in the submission, but it's not required.
+- Submissions are done via public Pull Requests. You may include your compression script in the submission, but it's not required.
+- Final ranking will be based on the public leaderboard, no private testing will be performed.
 
 ## leaderboard (lower is better)
 
-| Name     | Score | PR |
-| -------- |:-------:| -------- |
-| baseline_fast | 4.4     | |
-| no_compress | 25.0     | |
+<!-- TABLE-START -->
+<table class="ranked">
+ <thead>
+  <tr>
+   <th>
+   </th>
+   <th>
+    score
+   </th>
+   <th>
+    name
+   </th>
+   <th>
+    link
+   </th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td>
+   </td>
+   <td>
+    0.32
+   </td>
+   <td>
+    qpose14
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/63" target="_blank">
+     #63
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    0.33
+   </td>
+   <td>
+    unified_brotli
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/64" target="_blank">
+     #64
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    0.33
+   </td>
+   <td>
+    quantizr
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/55" target="_blank">
+     #55
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    0.37
+   </td>
+   <td>
+    fp4_mask_gen
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/62" target="_blank">
+     #62
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    0.38
+   </td>
+   <td>
+    selfcomp
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/56" target="_blank">
+     #56
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    0.60
+   </td>
+   <td>
+    mask2mask
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/53" target="_blank">
+     #53
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    1.24
+   </td>
+   <td>
+    codex_metric_yshift_av1
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/60" target="_blank">
+     #60
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    1.89
+   </td>
+   <td>
+    neural_inflate
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/49" target="_blank">
+     #49
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    1.91
+   </td>
+   <td>
+    svtav1_dilated_ren
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/58" target="_blank">
+     #58
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    1.94
+   </td>
+   <td>
+    roi_v2
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/48" target="_blank">
+     #48
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    1.95
+   </td>
+   <td>
+    av1_roi_lanczos_unsharp
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/31" target="_blank">
+     #31
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    1.98
+   </td>
+   <td>
+    svtav1_av1grain_10bit
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/51" target="_blank">
+     #51
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    1.98
+   </td>
+   <td>
+    damir_bearclaw_002
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/30" target="_blank">
+     #30
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    2.01
+   </td>
+   <td>
+    roi_gop300_c34
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/43" target="_blank">
+     #43
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    2.02
+   </td>
+   <td>
+    v4_qp_aq2_roi
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/44" target="_blank">
+     #44
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    2.03
+   </td>
+   <td>
+    av1_crf31_bicubic
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/52" target="_blank">
+     #52
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    2.05
+   </td>
+   <td>
+    svtav1_cheetah
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/24" target="_blank">
+     #24
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    2.07
+   </td>
+   <td>
+    svtav1_45pct_unsharp20_direct
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/27" target="_blank">
+     #27
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    2.08
+   </td>
+   <td>
+    svtav1_gop360_binomial_unsharp
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/26" target="_blank">
+     #26
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    2.08
+   </td>
+   <td>
+    av1_sharp1_adaptive
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/23" target="_blank">
+     #23
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    2.09
+   </td>
+   <td>
+    svtav1_45pct_unsharp
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/20" target="_blank">
+     #20
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    2.16
+   </td>
+   <td>
+    svtav1_spline_fg22
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/37" target="_blank">
+     #37
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    2.20
+   </td>
+   <td>
+    svt_av1_lanczos_fg
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/18" target="_blank">
+     #18
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    2.55
+   </td>
+   <td>
+    h265_g16_512x384_veryslow
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/21" target="_blank">
+     #21
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    3.32
+   </td>
+   <td>
+    h265_tuned
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/22" target="_blank">
+     #22
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    3.83
+   </td>
+   <td>
+    delta_codec
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/61" target="_blank">
+     #61
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    4.39
+   </td>
+   <td>
+    baseline_fast
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/tree/3e91fd50585789e50a636479ae80f4f877c5e2ac/submissions/baseline_fast" target="_blank">
+     #1
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    5.09
+   </td>
+   <td>
+    damir_bearclaw_003
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/39" target="_blank">
+     #39
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    25.0
+   </td>
+   <td>
+    no_compress
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/tree/3e91fd50585789e50a636479ae80f4f877c5e2ac/submissions/no_compress" target="_blank">
+     #0
+    </a>
+   </td>
+  </tr>
+ </tbody>
+</table>
+<!-- TABLE-END -->
+
+> mirrored from [comma.ai/leaderboard](https://comma.ai/leaderboard)
 
 ## going further
 
