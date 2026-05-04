@@ -1,0 +1,7 @@
+name,size,pose,seg,score,decision,lesson
+Final qpose/tile-action variant,277087,0.00061985,0.0007102,0.33,kept,Stable temporal behavior; conservative tile corrections preserve PoseNet.
+Lossless temporal-delta mask codec,648559,,,,rejected,Simple temporal delta coding was substantially larger than the original mask stream.
+Simple arithmetic mask codec,305334,,,,rejected,Hand-written spatial/temporal contexts were still worse than the existing representation.
+Lossy mask re-encode CRF50,273630,0.00529962,0.00082431,0.49,rejected,Small byte savings were overwhelmed by temporal distortion.
+Lossy mask re-encode CRF60,181142,0.04886454,0.00201768,1.02,rejected,"Excellent rate reduction, but catastrophic PoseNet degradation."
+Aggressive keyframe/g=1 mask re-encode,340225,0.26924199,0.0018816,2.06,rejected,Larger archive and severe temporal failure.

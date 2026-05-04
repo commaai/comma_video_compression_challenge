@@ -1,0 +1,67 @@
+{
+  "final": {
+    "pose": 0.00061985,
+    "seg": 0.0007102,
+    "size": 277087,
+    "original_size": 37545489,
+    "rate": 0.00738003,
+    "score": 0.33
+  },
+  "experiments": [
+    {
+      "name": "Final qpose/tile-action variant",
+      "size": 277087,
+      "pose": 0.00061985,
+      "seg": 0.0007102,
+      "score": 0.33,
+      "decision": "kept",
+      "lesson": "Stable temporal behavior; conservative tile corrections preserve PoseNet."
+    },
+    {
+      "name": "Lossless temporal-delta mask codec",
+      "size": 648559,
+      "pose": null,
+      "seg": null,
+      "score": null,
+      "decision": "rejected",
+      "lesson": "Simple temporal delta coding was substantially larger than the original mask stream."
+    },
+    {
+      "name": "Simple arithmetic mask codec",
+      "size": 305334,
+      "pose": null,
+      "seg": null,
+      "score": null,
+      "decision": "rejected",
+      "lesson": "Hand-written spatial/temporal contexts were still worse than the existing representation."
+    },
+    {
+      "name": "Lossy mask re-encode CRF50",
+      "size": 273630,
+      "pose": 0.00529962,
+      "seg": 0.00082431,
+      "score": 0.49,
+      "decision": "rejected",
+      "lesson": "Small byte savings were overwhelmed by temporal distortion."
+    },
+    {
+      "name": "Lossy mask re-encode CRF60",
+      "size": 181142,
+      "pose": 0.04886454,
+      "seg": 0.00201768,
+      "score": 1.02,
+      "decision": "rejected",
+      "lesson": "Excellent rate reduction, but catastrophic PoseNet degradation."
+    },
+    {
+      "name": "Aggressive keyframe/g=1 mask re-encode",
+      "size": 340225,
+      "pose": 0.26924199,
+      "seg": 0.0018816,
+      "score": 2.06,
+      "decision": "rejected",
+      "lesson": "Larger archive and severe temporal failure."
+    }
+  ],
+  "frame_summary": []
+}
