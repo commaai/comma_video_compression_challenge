@@ -147,7 +147,7 @@ The official evaluation has a time limit of 30 minutes. If your inflation script
     0.209
    </td>
    <td>
-    belt_and_suspenders
+    belt_and_suspenders 👑
    </td>
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/106" target="_blank">
@@ -162,7 +162,7 @@ The official evaluation has a time limit of 30 minutes. If your inflation script
     0.226
    </td>
    <td>
-    hnerv_ft_microcodec
+    hnerv_ft_microcodec 👑
    </td>
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/101" target="_blank">
@@ -177,7 +177,7 @@ The official evaluation has a time limit of 30 minutes. If your inflation script
     0.228
    </td>
    <td>
-    hnerv_lc_ac
+    hnerv_lc_ac 👑
    </td>
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/103" target="_blank">
@@ -267,7 +267,7 @@ The official evaluation has a time limit of 30 minutes. If your inflation script
     0.231
    </td>
    <td>
-    hnerv_muon
+    hnerv_muon 💡
    </td>
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/95" target="_blank">
@@ -372,7 +372,7 @@ The official evaluation has a time limit of 30 minutes. If your inflation script
     0.274
    </td>
    <td>
-    jas0xf_adversarial_neural_representation
+    jas0xf_adversarial_neural_representation 💡
    </td>
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/86" target="_blank">
@@ -402,7 +402,7 @@ The official evaluation has a time limit of 30 minutes. If your inflation script
     0.280
    </td>
    <td>
-    qrepro
+    qrepro 💡
    </td>
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/90" target="_blank">
@@ -417,7 +417,7 @@ The official evaluation has a time limit of 30 minutes. If your inflation script
     0.281
    </td>
    <td>
-    qzs3_range_mask
+    qzs3_range_mask 💡
    </td>
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/81" target="_blank">
@@ -552,7 +552,7 @@ The official evaluation has a time limit of 30 minutes. If your inflation script
     0.333
    </td>
    <td>
-    quantizr
+    quantizr 💡
    </td>
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/55" target="_blank">
@@ -642,7 +642,7 @@ The official evaluation has a time limit of 30 minutes. If your inflation script
     1.236
    </td>
    <td>
-    codex_metric_yshift_av1
+    codex_metric_yshift_av1 💡
    </td>
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/60" target="_blank">
@@ -657,7 +657,7 @@ The official evaluation has a time limit of 30 minutes. If your inflation script
     1.891
    </td>
    <td>
-    neural_inflate
+    neural_inflate 💡
    </td>
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/49" target="_blank">
@@ -732,7 +732,7 @@ The official evaluation has a time limit of 30 minutes. If your inflation script
     1.981
    </td>
    <td>
-    damir_bearclaw_002
+    damir_bearclaw_002 💡
    </td>
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/30" target="_blank">
@@ -762,7 +762,7 @@ The official evaluation has a time limit of 30 minutes. If your inflation script
     2.020
    </td>
    <td>
-    v4_qp_aq2_roi
+    v4_qp_aq2_roi 💡
    </td>
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/44" target="_blank">
@@ -852,7 +852,7 @@ The official evaluation has a time limit of 30 minutes. If your inflation script
     2.086
    </td>
    <td>
-    svtav1_45pct_unsharp
+    svtav1_45pct_unsharp 💡
    </td>
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/20" target="_blank">
@@ -927,7 +927,7 @@ The official evaluation has a time limit of 30 minutes. If your inflation script
     3.833
    </td>
    <td>
-    delta_codec
+    delta_codec 💡
    </td>
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/61" target="_blank">
