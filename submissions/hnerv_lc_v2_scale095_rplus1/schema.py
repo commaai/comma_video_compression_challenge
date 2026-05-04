@@ -1,0 +1,38 @@
+# Auto-generated from AaronLeslie138's hnerv_muon archive.
+META = {
+  'n_pairs': 600,
+  'latent_dim': 28,
+  'base_channels': 36,
+  'eval_size': (384, 512),
+}
+
+SCHEMA = [
+  ('stem.weight', (1728, 28)),
+  ('stem.bias', (1728,)),
+  ('blocks.0.weight', (144, 36, 3, 3)),
+  ('blocks.0.bias', (144,)),
+  ('blocks.1.weight', (144, 36, 3, 3)),
+  ('blocks.1.bias', (144,)),
+  ('blocks.2.weight', (108, 36, 3, 3)),
+  ('blocks.2.bias', (108,)),
+  ('blocks.3.weight', (80, 27, 3, 3)),
+  ('blocks.3.bias', (80,)),
+  ('blocks.4.weight', (72, 20, 3, 3)),
+  ('blocks.4.bias', (72,)),
+  ('blocks.5.weight', (72, 18, 3, 3)),
+  ('blocks.5.bias', (72,)),
+  ('skips.2.weight', (27, 36, 1, 1)),
+  ('skips.2.bias', (27,)),
+  ('skips.3.weight', (20, 27, 1, 1)),
+  ('skips.3.bias', (20,)),
+  ('skips.4.weight', (18, 20, 1, 1)),
+  ('skips.4.bias', (18,)),
+  ('refine.0.weight', (9, 18, 3, 3)),
+  ('refine.0.bias', (9,)),
+  ('refine.1.weight', (18, 9, 3, 3)),
+  ('refine.1.bias', (18,)),
+  ('rgb_0.weight', (3, 18, 3, 3)),
+  ('rgb_0.bias', (3,)),
+  ('rgb_1.weight', (3, 18, 3, 3)),
+  ('rgb_1.bias', (3,)),
+]
