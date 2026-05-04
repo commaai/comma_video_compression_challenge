@@ -1,0 +1,17 @@
+=== Evaluation config ===
+  batch_size: 16
+  device: cuda
+  num_threads: 2
+  prefetch_queue_depth: 4
+  report: submissions/qhnerv_ft_best/report.txt
+  seed: 1234
+  submission_dir: submissions/qhnerv_ft_best
+  uncompressed_dir: /content/comma_video_compression_challenge/videos
+  video_names_file: /content/comma_video_compression_challenge/public_test_video_names.txt
+=== Evaluation results over 600 samples ===
+  Average PoseNet Distortion: 0.00016895
+  Average SegNet Distortion: 0.00070710
+  Submission file size: 178,637 bytes
+  Original uncompressed size: 37,545,507 bytes
+  Compression Rate: 0.00475788
+  Final score: 100*segnet_dist + √(10*posenet_dist) + 25*rate = 0.23
