@@ -1,0 +1,17 @@
+=== Evaluation config ===
+  batch_size: 16
+  device: mps
+  num_threads: 2
+  prefetch_queue_depth: 4
+  report: submissions/optimization_qpose/report.txt
+  seed: 1234
+  submission_dir: submissions/optimization_qpose
+  uncompressed_dir: /Users/josemedina/comma_video_compression_challenge/videos
+  video_names_file: /Users/josemedina/comma_video_compression_challenge/public_test_video_names.txt
+=== Evaluation results over 600 samples ===
+  Average PoseNet Distortion: 0.00061985
+  Average SegNet Distortion: 0.00071020
+  Submission file size: 277,087 bytes
+  Original uncompressed size: 37,545,489 bytes
+  Compression Rate: 0.00738003
+  Final score: 100*segnet_dist + √(10*posenet_dist) + 25*rate = 0.33
