@@ -27,7 +27,7 @@ constexpr uint32_t TOP = 0xFFFFFFFFu;
 constexpr uint32_t HALF = 0x80000000u;
 constexpr uint32_t FIRST_QTR = 0x40000000u;
 constexpr uint32_t THIRD_QTR = 0xC0000000u;
-constexpr uint32_t SCALE_TOTAL = 65535;
+constexpr uint32_t SCALE_TOTAL = 32767;
 
 #ifndef UP_TRUE_INIT
 #define UP_TRUE_INIT 3
@@ -101,13 +101,21 @@ struct AdaptiveModel9 {
 };
 
 struct AdaptiveModel9Binary {
-  std::vector<std::array<uint16_t, 2>> prev_freq;
-  std::vector<std::array<uint16_t, 2>> left_freq;
   std::vector<std::array<uint16_t, 2>> up_freq;
+  std::vector<std::array<uint16_t, 2>> left_freq;
+  std::vector<std::array<uint16_t, 2>> prev_freq;
+  std::vector<std::array<uint16_t, 2>> ul_freq;
+  std::vector<std::array<uint16_t, 2>> ur_freq;
+  std::vector<std::array<uint16_t, 2>> pr_freq;
+  std::vector<std::array<uint16_t, 2>> pd_freq;
+  std::vector<std::array<uint16_t, 2>> up2_freq;
+  std::vector<std::array<uint16_t, 2>> left2_freq;
+  std::vector<std::array<uint16_t, 2>> pl_freq;
+  std::vector<std::array<uint16_t, 2>> pu_freq;
   std::vector<std::array<uint16_t, CLASS_SYMS>> class_freq;
 
   AdaptiveModel9Binary()
-      : prev_freq(CTX9_COUNT), left_freq(CTX9_COUNT), up_freq(CTX9_COUNT), class_freq(CTX9_COUNT) {
+      : up_freq(CTX9_COUNT), left_freq(CTX9_COUNT), prev_freq(CTX9_COUNT), ul_freq(CTX9_COUNT), ur_freq(CTX9_COUNT), pr_freq(CTX9_COUNT), pd_freq(CTX9_COUNT), up2_freq(CTX9_COUNT), left2_freq(CTX9_COUNT), pl_freq(CTX9_COUNT), pu_freq(CTX9_COUNT), class_freq(CTX9_COUNT) {
     for (int ctx = 0; ctx < CTX9_COUNT; ctx++) {
       int v = ctx;
       uint8_t left2 = static_cast<uint8_t>(v % 6); v /= 6;
@@ -119,31 +127,22 @@ struct AdaptiveModel9Binary {
       uint8_t up = static_cast<uint8_t>(v % 6); v /= 6;
       uint8_t left = static_cast<uint8_t>(v % 6); v /= 6;
       uint8_t prev = static_cast<uint8_t>(v % 6);
-      (void)left2;
-      (void)up2;
-      (void)pd;
-      (void)pr;
-      (void)ur;
-      (void)ul;
-
-      prev_freq[ctx] = {1, PREV_TRUE_INIT};
-      left_freq[ctx] = {1, LEFT_TRUE_INIT};
       up_freq[ctx] = {1, UP_TRUE_INIT};
+      left_freq[ctx] = {1, LEFT_TRUE_INIT};
+      prev_freq[ctx] = {1, PREV_TRUE_INIT};
+      ul_freq[ctx] = {1, 3};
+      ur_freq[ctx] = {1, 3};
+      pr_freq[ctx] = {1, 3};
+      pd_freq[ctx] = {1, 3};
+      up2_freq[ctx] = {1, 3};
+      left2_freq[ctx] = {1, 3};
+      pl_freq[ctx] = {1, 3};
+      pu_freq[ctx] = {1, 3};
       class_freq[ctx].fill(1);
-
-      if (up == SENTINEL) up_freq[ctx] = {IMPOSSIBLE_FALSE_INIT, 1};
-      if (left == SENTINEL || left == up) left_freq[ctx] = {IMPOSSIBLE_FALSE_INIT, 1};
-      if (prev == SENTINEL || prev == up || prev == left) prev_freq[ctx] = {IMPOSSIBLE_FALSE_INIT, 1};
-
-      // The fallback class symbol is only reached after up/left/prev have all
-      // been rejected, so valid predictor classes are unlikely in this branch.
-      for (uint8_t cls = 0; cls < CLASS_SYMS; cls++) {
-        if (cls != up && cls != left && cls != prev) class_freq[ctx][cls] = FALLBACK_OTHER_INIT;
-      }
+      for (uint8_t cls = 0; cls < CLASS_SYMS; cls++) { if (cls != up && cls != left && cls != prev && cls != ul && cls != ur && cls != pr && cls != pd && cls != up2 && cls != left2) class_freq[ctx][cls] = FALLBACK_OTHER_INIT; }
     }
   }
 };
-
 struct BitWriter {
   std::vector<uint8_t> bytes;
   uint8_t cur = 0;
@@ -473,7 +472,7 @@ void update_adaptive(std::array<uint16_t, N>& freq, uint32_t sym) {
   }
   (void)total;
   freq[sym] = static_cast<uint16_t>(
-      std::min<uint32_t>(65535, static_cast<uint32_t>(freq[sym]) + 20));
+      std::min<uint32_t>(65535, static_cast<uint32_t>(freq[sym]) + 16));
 }
 
 template <size_t N>
@@ -959,96 +958,154 @@ std::vector<uint8_t> decode_payload_adaptive9x(const std::vector<uint8_t>& bits,
 }
 
 std::vector<uint8_t> encode_payload_adaptive9bin(const std::vector<uint8_t>& x, int t_count, int h, int w) {
-  AdaptiveModel9Binary model;
-  ArithmeticEncoder enc;
-  const size_t frame_size = static_cast<size_t>(h) * w;
-  std::vector<uint8_t> decoded(x.size(), 0);
-  for (int t = 0; t < t_count; t++) {
-    for (int y = 0; y < h; y++) {
-      size_t base = static_cast<size_t>(t) * frame_size + static_cast<size_t>(y) * w;
-      for (int xcoord = 0; xcoord < w; xcoord++) {
-        size_t idx = base + xcoord;
-        uint8_t cls = x[idx];
-        uint8_t prev = get_prev(x, frame_size, t, y, w, xcoord);
-        uint8_t left = get_left(decoded, base, xcoord);
-        uint8_t up = get_up(decoded, base, y, w, xcoord);
-        uint8_t ul = get_up_left(decoded, base, y, w, xcoord);
-        uint8_t ur = get_up_right(decoded, base, y, w, xcoord);
-        uint8_t pr = get_prev_right(x, frame_size, t, y, w, xcoord);
-        uint8_t pd = get_prev_down(x, frame_size, t, y, h, w, xcoord);
-        uint8_t up2 = get_up2(decoded, base, y, w, xcoord);
-        uint8_t left2 = get_left2(decoded, base, xcoord);
-        int ctx = ctx9_id(prev, left, up, ul, ur, pr, pd, up2, left2);
-        uint8_t b = cls == up;
-        encode_symbol<2>(enc, model.up_freq[ctx], b);
-        update_adaptive<2>(model.up_freq[ctx], b);
-        if (!b) {
-          b = cls == left;
+  AdaptiveModel9Binary model; ArithmeticEncoder enc; const size_t frame_size = static_cast<size_t>(h) * w; std::vector<uint8_t> decoded(x.size(), 0);
+  for (int t = 0; t < t_count; t++) { for (int y = 0; y < h; y++) { size_t base = static_cast<size_t>(t) * frame_size + static_cast<size_t>(y) * w; for (int xcoord = 0; xcoord < w; xcoord++) {
+        size_t idx = base + xcoord; uint8_t cls = x[idx];
+        uint8_t prev = get_prev(x, frame_size, t, y, w, xcoord); uint8_t left = get_left(decoded, base, xcoord); uint8_t up = get_up(decoded, base, y, w, xcoord);
+        uint8_t ul = get_up_left(decoded, base, y, w, xcoord); uint8_t ur = get_up_right(decoded, base, y, w, xcoord); uint8_t pr = get_prev_right(x, frame_size, t, y, w, xcoord); uint8_t pd = get_prev_down(x, frame_size, t, y, h, w, xcoord);
+        uint8_t up2 = get_up2(decoded, base, y, w, xcoord); uint8_t left2 = get_left2(decoded, base, xcoord);
+        uint8_t pl = get_prev_left(x, frame_size, t, y, w, xcoord);
+        uint8_t pu = get_prev_up(x, frame_size, t, y, w, xcoord);
+        uint8_t pdl = get_prev_down_left(x, frame_size, t, y, h, w, xcoord);
+        uint8_t pdr = get_prev_down_right(x, frame_size, t, y, h, w, xcoord);
+        int ctx = ctx9_id(prev, left, up, ul, ur, pr, pd, up2, left2); bool matched = false;
+        if (!matched && (up != SENTINEL)) {
+          uint8_t b = cls == up;
+          encode_symbol<2>(enc, model.up_freq[ctx], b);
+          update_adaptive<2>(model.up_freq[ctx], b);
+          matched = b;
+        }
+        if (!matched && (left != SENTINEL && left != up)) {
+          uint8_t b = cls == left;
           encode_symbol<2>(enc, model.left_freq[ctx], b);
           update_adaptive<2>(model.left_freq[ctx], b);
-          if (!b) {
-            b = cls == prev;
-            encode_symbol<2>(enc, model.prev_freq[ctx], b);
-            update_adaptive<2>(model.prev_freq[ctx], b);
-            if (!b) {
-              encode_symbol<CLASS_SYMS>(enc, model.class_freq[ctx], cls);
-              update_adaptive<CLASS_SYMS>(model.class_freq[ctx], cls);
-            }
-          }
+          matched = b;
         }
-        decoded[idx] = cls;
-      }
-    }
-  }
-  return enc.finish();
-}
+        if (!matched && (prev != SENTINEL && prev != up && prev != left)) {
+          uint8_t b = cls == prev;
+          encode_symbol<2>(enc, model.prev_freq[ctx], b);
+          update_adaptive<2>(model.prev_freq[ctx], b);
+          matched = b;
+        }
+        if (!matched && (ul != SENTINEL && ul != up && ul != left && ul != prev)) {
+          uint8_t b = cls == ul;
+          encode_symbol<2>(enc, model.ul_freq[ctx], b);
+          update_adaptive<2>(model.ul_freq[ctx], b);
+          matched = b;
+        }
+        if (!matched && (ur != SENTINEL && ur != up && ur != left && ur != prev && ur != ul)) {
+          uint8_t b = cls == ur;
+          encode_symbol<2>(enc, model.ur_freq[ctx], b);
+          update_adaptive<2>(model.ur_freq[ctx], b);
+          matched = b;
+        }
+        if (!matched && (pr != SENTINEL && pr != up && pr != left && pr != prev && pr != ul && pr != ur)) {
+          uint8_t b = cls == pr;
+          encode_symbol<2>(enc, model.pr_freq[ctx], b);
+          update_adaptive<2>(model.pr_freq[ctx], b);
+          matched = b;
+        }
+        if (!matched && (pd != SENTINEL && pd != up && pd != left && pd != prev && pd != ul && pd != ur && pd != pr)) {
+          uint8_t b = cls == pd;
+          encode_symbol<2>(enc, model.pd_freq[ctx], b);
+          update_adaptive<2>(model.pd_freq[ctx], b);
+          matched = b;
+        }
+        if (!matched && (up2 != SENTINEL && up2 != up && up2 != left && up2 != prev && up2 != ul && up2 != ur && up2 != pr && up2 != pd)) {
+          uint8_t b = cls == up2;
+          encode_symbol<2>(enc, model.up2_freq[ctx], b);
+          update_adaptive<2>(model.up2_freq[ctx], b);
+          matched = b;
+        }
+        if (!matched && (left2 != SENTINEL && left2 != up && left2 != left && left2 != prev && left2 != ul && left2 != ur && left2 != pr && left2 != pd && left2 != up2)) {
+          uint8_t b = cls == left2;
+          encode_symbol<2>(enc, model.left2_freq[ctx], b);
+          update_adaptive<2>(model.left2_freq[ctx], b);
+          matched = b;
+        }
+        if (!matched && (pl != SENTINEL && pl != up && pl != left && pl != prev && pl != ul && pl != ur && pl != pr && pl != pd && pl != up2 && pl != left2)) {
+          uint8_t b = cls == pl;
+          encode_symbol<2>(enc, model.pl_freq[ctx], b);
+          update_adaptive<2>(model.pl_freq[ctx], b);
+          matched = b;
+        }
+        if (!matched && (pu != SENTINEL && pu != up && pu != left && pu != prev && pu != ul && pu != ur && pu != pr && pu != pd && pu != up2 && pu != left2 && pu != pl)) {
+          uint8_t b = cls == pu;
+          encode_symbol<2>(enc, model.pu_freq[ctx], b);
+          update_adaptive<2>(model.pu_freq[ctx], b);
+          matched = b;
+        }
+        if (!matched) { encode_symbol<CLASS_SYMS>(enc, model.class_freq[ctx], cls); update_adaptive<CLASS_SYMS>(model.class_freq[ctx], cls); } decoded[idx] = cls;
+  } } } return enc.finish(); }
 
 std::vector<uint8_t> decode_payload_adaptive9bin(const std::vector<uint8_t>& bits, int t_count, int h, int w) {
-  AdaptiveModel9Binary model;
-  ArithmeticDecoder dec(bits);
-  const size_t frame_size = static_cast<size_t>(h) * w;
-  std::vector<uint8_t> out(static_cast<size_t>(t_count) * frame_size, 0);
-  for (int t = 0; t < t_count; t++) {
-    for (int y = 0; y < h; y++) {
-      size_t base = static_cast<size_t>(t) * frame_size + static_cast<size_t>(y) * w;
-      for (int xcoord = 0; xcoord < w; xcoord++) {
-        uint8_t prev = get_prev(out, frame_size, t, y, w, xcoord);
-        uint8_t left = get_left(out, base, xcoord);
-        uint8_t up = get_up(out, base, y, w, xcoord);
-        uint8_t ul = get_up_left(out, base, y, w, xcoord);
-        uint8_t ur = get_up_right(out, base, y, w, xcoord);
-        uint8_t pr = get_prev_right(out, frame_size, t, y, w, xcoord);
-        uint8_t pd = get_prev_down(out, frame_size, t, y, h, w, xcoord);
-        uint8_t up2 = get_up2(out, base, y, w, xcoord);
-        uint8_t left2 = get_left2(out, base, xcoord);
-        int ctx = ctx9_id(prev, left, up, ul, ur, pr, pd, up2, left2);
-        uint8_t cls = 0;
-        uint8_t b = static_cast<uint8_t>(decode_symbol<2>(dec, model.up_freq[ctx]));
-        update_adaptive<2>(model.up_freq[ctx], b);
-        if (b) {
-          cls = up;
-        } else {
-          b = static_cast<uint8_t>(decode_symbol<2>(dec, model.left_freq[ctx]));
-          update_adaptive<2>(model.left_freq[ctx], b);
-          if (b) {
-            cls = left;
-          } else {
-            b = static_cast<uint8_t>(decode_symbol<2>(dec, model.prev_freq[ctx]));
-            update_adaptive<2>(model.prev_freq[ctx], b);
-            if (b) {
-              cls = prev;
-            } else {
-              cls = static_cast<uint8_t>(decode_symbol<CLASS_SYMS>(dec, model.class_freq[ctx]));
-              update_adaptive<CLASS_SYMS>(model.class_freq[ctx], cls);
-            }
-          }
+  AdaptiveModel9Binary model; ArithmeticDecoder dec(bits); const size_t frame_size = static_cast<size_t>(h) * w; std::vector<uint8_t> out(static_cast<size_t>(t_count) * frame_size, 0);
+  for (int t = 0; t < t_count; t++) { for (int y = 0; y < h; y++) { size_t base = static_cast<size_t>(t) * frame_size + static_cast<size_t>(y) * w; for (int xcoord = 0; xcoord < w; xcoord++) {
+        uint8_t prev = get_prev(out, frame_size, t, y, w, xcoord); uint8_t left = get_left(out, base, xcoord); uint8_t up = get_up(out, base, y, w, xcoord);
+        uint8_t ul = get_up_left(out, base, y, w, xcoord); uint8_t ur = get_up_right(out, base, y, w, xcoord); uint8_t pr = get_prev_right(out, frame_size, t, y, w, xcoord); uint8_t pd = get_prev_down(out, frame_size, t, y, h, w, xcoord);
+        uint8_t up2 = get_up2(out, base, y, w, xcoord); uint8_t left2 = get_left2(out, base, xcoord);
+        uint8_t pl = get_prev_left(out, frame_size, t, y, w, xcoord);
+        uint8_t pu = get_prev_up(out, frame_size, t, y, w, xcoord);
+        uint8_t pdl = get_prev_down_left(out, frame_size, t, y, h, w, xcoord);
+        uint8_t pdr = get_prev_down_right(out, frame_size, t, y, h, w, xcoord);
+        int ctx = ctx9_id(prev, left, up, ul, ur, pr, pd, up2, left2); uint8_t cls = 0; bool matched = false;
+        if (!matched && (up != SENTINEL)) {
+          uint8_t b = static_cast<uint8_t>(decode_symbol<2>(dec, model.up_freq[ctx]));
+          update_adaptive<2>(model.up_freq[ctx], b);
+          if (b) { cls = up; matched = true; }
         }
-        out[base + xcoord] = cls;
-      }
-    }
-  }
-  return out;
-}
+        if (!matched && (left != SENTINEL && left != up)) {
+          uint8_t b = static_cast<uint8_t>(decode_symbol<2>(dec, model.left_freq[ctx]));
+          update_adaptive<2>(model.left_freq[ctx], b);
+          if (b) { cls = left; matched = true; }
+        }
+        if (!matched && (prev != SENTINEL && prev != up && prev != left)) {
+          uint8_t b = static_cast<uint8_t>(decode_symbol<2>(dec, model.prev_freq[ctx]));
+          update_adaptive<2>(model.prev_freq[ctx], b);
+          if (b) { cls = prev; matched = true; }
+        }
+        if (!matched && (ul != SENTINEL && ul != up && ul != left && ul != prev)) {
+          uint8_t b = static_cast<uint8_t>(decode_symbol<2>(dec, model.ul_freq[ctx]));
+          update_adaptive<2>(model.ul_freq[ctx], b);
+          if (b) { cls = ul; matched = true; }
+        }
+        if (!matched && (ur != SENTINEL && ur != up && ur != left && ur != prev && ur != ul)) {
+          uint8_t b = static_cast<uint8_t>(decode_symbol<2>(dec, model.ur_freq[ctx]));
+          update_adaptive<2>(model.ur_freq[ctx], b);
+          if (b) { cls = ur; matched = true; }
+        }
+        if (!matched && (pr != SENTINEL && pr != up && pr != left && pr != prev && pr != ul && pr != ur)) {
+          uint8_t b = static_cast<uint8_t>(decode_symbol<2>(dec, model.pr_freq[ctx]));
+          update_adaptive<2>(model.pr_freq[ctx], b);
+          if (b) { cls = pr; matched = true; }
+        }
+        if (!matched && (pd != SENTINEL && pd != up && pd != left && pd != prev && pd != ul && pd != ur && pd != pr)) {
+          uint8_t b = static_cast<uint8_t>(decode_symbol<2>(dec, model.pd_freq[ctx]));
+          update_adaptive<2>(model.pd_freq[ctx], b);
+          if (b) { cls = pd; matched = true; }
+        }
+        if (!matched && (up2 != SENTINEL && up2 != up && up2 != left && up2 != prev && up2 != ul && up2 != ur && up2 != pr && up2 != pd)) {
+          uint8_t b = static_cast<uint8_t>(decode_symbol<2>(dec, model.up2_freq[ctx]));
+          update_adaptive<2>(model.up2_freq[ctx], b);
+          if (b) { cls = up2; matched = true; }
+        }
+        if (!matched && (left2 != SENTINEL && left2 != up && left2 != left && left2 != prev && left2 != ul && left2 != ur && left2 != pr && left2 != pd && left2 != up2)) {
+          uint8_t b = static_cast<uint8_t>(decode_symbol<2>(dec, model.left2_freq[ctx]));
+          update_adaptive<2>(model.left2_freq[ctx], b);
+          if (b) { cls = left2; matched = true; }
+        }
+        if (!matched && (pl != SENTINEL && pl != up && pl != left && pl != prev && pl != ul && pl != ur && pl != pr && pl != pd && pl != up2 && pl != left2)) {
+          uint8_t b = static_cast<uint8_t>(decode_symbol<2>(dec, model.pl_freq[ctx]));
+          update_adaptive<2>(model.pl_freq[ctx], b);
+          if (b) { cls = pl; matched = true; }
+        }
+        if (!matched && (pu != SENTINEL && pu != up && pu != left && pu != prev && pu != ul && pu != ur && pu != pr && pu != pd && pu != up2 && pu != left2 && pu != pl)) {
+          uint8_t b = static_cast<uint8_t>(decode_symbol<2>(dec, model.pu_freq[ctx]));
+          update_adaptive<2>(model.pu_freq[ctx], b);
+          if (b) { cls = pu; matched = true; }
+        }
+        if (!matched) { cls = static_cast<uint8_t>(decode_symbol<CLASS_SYMS>(dec, model.class_freq[ctx])); update_adaptive<CLASS_SYMS>(model.class_freq[ctx], cls); } out[base + xcoord] = cls;
+  } } } return out; }
 
 void append_u32(std::vector<uint8_t>& out, uint32_t v) {
   for (int i = 0; i < 4; i++) out.push_back(static_cast<uint8_t>((v >> (i * 8)) & 0xFF));

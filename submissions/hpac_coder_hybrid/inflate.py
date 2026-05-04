@@ -18,6 +18,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 from tqdm import tqdm
 
+from pr86_hpac import decompress_tokens_hpac as decompress_pr86_hpac_tokens
+
 
 # -----------------------------
 # FP4 Dequantization Tools
@@ -880,8 +882,43 @@ def main():
     generator.load_state_dict(get_decoded_state_dict(weights_data, device), strict=True)
     generator.eval()
 
-    # 2. Load Mask Video (.obu) or exact qzs3 range-coded class tensor.
-    if bundle is not None and bundle["mask"][:4] in (b"QMA6", b"QMA7", b"QMA8", b"QMA9"):
+    # 2. Load Mask Video (.obu), exact qzs3 range-coded class tensor, or PR86 HPAC tokens.
+    if bundle is not None and bundle["mask"][:4] == b"HPM1":
+        raw_h = bundle["mask"]
+        if len(raw_h) < 48:
+            raise ValueError("truncated HPM1 mask payload")
+        pos_h = 4
+        n_h, h_h, w_h, p_h, delta_h, ch_h, use_spm_h, hpac_d_film_h, tokens_len_h, hpac_len_h, ppmd_order_h = struct.unpack_from("<IIIIIIIIIII", raw_h, pos_h)
+        pos_h += 44
+        tokens_blob_h = raw_h[pos_h:pos_h + tokens_len_h]
+        pos_h += tokens_len_h
+        hpac_blob_h = raw_h[pos_h:pos_h + hpac_len_h]
+        if len(tokens_blob_h) != tokens_len_h or len(hpac_blob_h) != hpac_len_h:
+            raise ValueError("truncated HPM1 mask blobs")
+        with tempfile.NamedTemporaryFile(suffix=".pt.ppmd", delete=False) as tmp_hpac:
+            tmp_hpac.write(hpac_blob_h)
+            hpac_path_h = Path(tmp_hpac.name)
+        try:
+            mask_np_h = decompress_pr86_hpac_tokens(
+                tokens_blob_h,
+                int(n_h),
+                int(h_h),
+                int(w_h),
+                hpac_path_h,
+                int(p_h),
+                int(delta_h),
+                int(ch_h),
+                str(device),
+                bool(use_spm_h),
+                int(hpac_d_film_h),
+            )
+        finally:
+            try:
+                os.remove(hpac_path_h)
+            except OSError:
+                pass
+        mask_frames_all = torch.from_numpy(mask_np_h.astype(np.uint8)).long()
+    elif bundle is not None and bundle["mask"][:4] in (b"QMA6", b"QMA7", b"QMA8", b"QMA9"):
         mask_frames_all = load_range_mask(bundle["mask"])
     else:
         with tempfile.NamedTemporaryFile(suffix=".obu", delete=False) as tmp_obu:
