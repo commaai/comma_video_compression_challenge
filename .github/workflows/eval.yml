@@ -27,7 +27,7 @@ on:
 jobs:
   test:
     runs-on: ${{ inputs.runner }}
-    timeout-minutes: 30
+    timeout-minutes: 60
     env:
       UV_GROUP: ${{ inputs.runner == 'linux-nvidia-t4' && 'cu128' || 'cpu' }}
       EVAL_DEVICE: ${{ inputs.runner == 'linux-nvidia-t4' && 'cuda' || 'cpu' }}
@@ -69,7 +69,9 @@ jobs:
 
       - id: install_deps
         name: Install dependencies
-        run: uv sync --group "$UV_GROUP"
+        run: |
+          uv sync --group "$UV_GROUP"
+          uv pip install brotli constriction pyppmd opencv-python-headless
 
       - id: install_ffmpeg
         name: Install ffmpeg
