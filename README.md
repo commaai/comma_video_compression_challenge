@@ -144,22 +144,7 @@ The official evaluation has a time limit of 30 minutes. Pick your runtime: githu
    <td>
    </td>
    <td>
-    0.209
-   </td>
-   <td>
-    belt_and_suspenders 👑
-   </td>
-   <td>
-    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/106" target="_blank">
-     #106
-    </a>
-   </td>
-  </tr>
-  <tr>
-   <td>
-   </td>
-   <td>
-    0.226
+    0.193
    </td>
    <td>
     hnerv_ft_microcodec 👑
@@ -174,7 +159,7 @@ The official evaluation has a time limit of 30 minutes. Pick your runtime: githu
    <td>
    </td>
    <td>
-    0.228
+    0.195
    </td>
    <td>
     hnerv_lc_ac 👑
@@ -189,7 +174,22 @@ The official evaluation has a time limit of 30 minutes. Pick your runtime: githu
    <td>
    </td>
    <td>
-    0.228
+    0.195
+   </td>
+   <td>
+    hnerv_lc_v2_scale095_rplus1 👑
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/102" target="_blank">
+     #102
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    0.195
    </td>
    <td>
     hnerv_lc_v2
@@ -204,14 +204,74 @@ The official evaluation has a time limit of 30 minutes. Pick your runtime: githu
    <td>
    </td>
    <td>
-    0.228
+    0.197
    </td>
    <td>
-    hnerv_lc_v2_scale095_rplus1
+    hnerv_muon_finetuned_from_pr95
    </td>
    <td>
-    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/102" target="_blank">
-     #102
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/98" target="_blank">
+     #98
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    0.198
+   </td>
+   <td>
+    kitchen_sink
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/105" target="_blank">
+     #105
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    0.199
+   </td>
+   <td>
+    hnerv_muon 💡
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/95" target="_blank">
+     #95
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    0.206
+   </td>
+   <td>
+    rem2_HNeRV
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/96" target="_blank">
+     #96
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    0.209
+   </td>
+   <td>
+    belt_and_suspenders
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/106" target="_blank">
+     #106
     </a>
    </td>
   </tr>
@@ -222,11 +282,11 @@ The official evaluation has a time limit of 30 minutes. Pick your runtime: githu
     0.229
    </td>
    <td>
-    hnerv_muon_finetuned_from_pr95
+    vibe_coder_final_boss
    </td>
    <td>
-    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/98" target="_blank">
-     #98
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/97" target="_blank">
+     #97
     </a>
    </td>
   </tr>
@@ -249,36 +309,6 @@ The official evaluation has a time limit of 30 minutes. Pick your runtime: githu
    <td>
    </td>
    <td>
-    0.230
-   </td>
-   <td>
-    kitchen_sink
-   </td>
-   <td>
-    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/105" target="_blank">
-     #105
-    </a>
-   </td>
-  </tr>
-  <tr>
-   <td>
-   </td>
-   <td>
-    0.231
-   </td>
-   <td>
-    hnerv_muon 💡
-   </td>
-   <td>
-    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/95" target="_blank">
-     #95
-    </a>
-   </td>
-  </tr>
-  <tr>
-   <td>
-   </td>
-   <td>
     0.231
    </td>
    <td>
@@ -294,21 +324,6 @@ The official evaluation has a time limit of 30 minutes. Pick your runtime: githu
    <td>
    </td>
    <td>
-    0.238
-   </td>
-   <td>
-    rem2_HNeRV
-   </td>
-   <td>
-    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/96" target="_blank">
-     #96
-    </a>
-   </td>
-  </tr>
-  <tr>
-   <td>
-   </td>
-   <td>
     0.249
    </td>
    <td>
@@ -317,21 +332,6 @@ The official evaluation has a time limit of 30 minutes. Pick your runtime: githu
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/91" target="_blank">
      #91
-    </a>
-   </td>
-  </tr>
-  <tr>
-   <td>
-   </td>
-   <td>
-    0.252
-   </td>
-   <td>
-    vibe_coder_final_boss
-   </td>
-   <td>
-    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/97" target="_blank">
-     #97
     </a>
    </td>
   </tr>
@@ -414,7 +414,7 @@ The official evaluation has a time limit of 30 minutes. Pick your runtime: githu
    <td>
    </td>
    <td>
-    0.281
+    0.288
    </td>
    <td>
     qzs3_range_mask 💡
@@ -519,21 +519,6 @@ The official evaluation has a time limit of 30 minutes. Pick your runtime: githu
    <td>
    </td>
    <td>
-    0.325
-   </td>
-   <td>
-    qpose14_poseq6
-   </td>
-   <td>
-    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/76" target="_blank">
-     #76
-    </a>
-   </td>
-  </tr>
-  <tr>
-   <td>
-   </td>
-   <td>
     0.331
    </td>
    <td>
@@ -557,6 +542,21 @@ The official evaluation has a time limit of 30 minutes. Pick your runtime: githu
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/55" target="_blank">
      #55
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    0.344
+   </td>
+   <td>
+    qpose14_poseq6
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/76" target="_blank">
+     #76
     </a>
    </td>
   </tr>
@@ -612,7 +612,7 @@ The official evaluation has a time limit of 30 minutes. Pick your runtime: githu
     0.602
    </td>
    <td>
-    mask2mask
+    mask2mask 💡
    </td>
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/53" target="_blank">
