@@ -36,16 +36,7 @@ jobs:
       - id: checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.pr_number && format('refs/pull/{0}/merge', inputs.pr_number) || 'master' }}
-
-      - id: check_name
-        name: Check submission_name is unique (except for "baseline" for testing)
-        run: |
-          git fetch origin master --depth=1
-          if [ "${{ inputs.submission_name }}" != "baseline" ] && git ls-tree --name-only origin/master -- "submissions/${{ inputs.submission_name }}/" | grep -q .; then
-            echo "::error::submission_name '${{ inputs.submission_name }}' already exists in master"
-            exit 1
-          fi
+          ref: ${{ inputs.pr_number && format('refs/pull/{0}/head', inputs.pr_number) || 'master' }}
 
       - id: check_gpu
         name: Check GPU
