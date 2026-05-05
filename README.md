@@ -192,7 +192,7 @@ The official evaluation has a time limit of 30 minutes. Pick your runtime: githu
     0.195
    </td>
    <td>
-    hnerv_lc_v2
+    hnerv_lc_v2 💡
    </td>
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/100" target="_blank">
@@ -237,7 +237,7 @@ The official evaluation has a time limit of 30 minutes. Pick your runtime: githu
     0.199
    </td>
    <td>
-    hnerv_muon 💡
+    hnerv_muon 💡 📖
    </td>
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/95" target="_blank">
