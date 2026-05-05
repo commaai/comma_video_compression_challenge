@@ -1,31 +1,51 @@
-#!/usr/bin/env python
-import av, torch
+import av
+import torch
 import torch.nn.functional as F
-from frame_utils import camera_size, yuv420_to_rgb
+import numpy as np
+import argparse
+from pathlib import Path
 
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--input", type=str, required=True)
+    parser.add_argument("--output", type=str, required=True)
+    args = parser.parse_args()
 
-def decode_and_resize_to_file(video_path: str, dst: str):
-  target_w, target_h = camera_size
-  fmt = 'hevc' if video_path.endswith('.hevc') else None
-  container = av.open(video_path, format=fmt)
-  stream = container.streams.video[0]
-  n = 0
-  with open(dst, 'wb') as f:
-    for frame in container.decode(stream):
-      t = yuv420_to_rgb(frame)  # (H, W, 3)
-      H, W, _ = t.shape
-      if H != target_h or W != target_w:
-        x = t.permute(2, 0, 1).unsqueeze(0).float()  # (1, C, H, W)
-        x = F.interpolate(x, size=(target_h, target_w), mode='bicubic', align_corners=False)
-        t = x.clamp(0, 255).squeeze(0).permute(1, 2, 0).round().to(torch.uint8)
-      f.write(t.contiguous().numpy().tobytes())
-      n += 1
-  container.close()
-  return n
+    container = av.open(args.input)
+    stream = container.streams.video[0]
+    
+    # Target size required by evaluate.py
+    target_w, target_h = 1164, 874
+    
+    # Simple sharpening kernel
+    sharpen_kernel = torch.tensor([
+        [0, -1, 0],
+        [-1, 5, -1],
+        [0, -1, 0]
+    ], dtype=torch.float32).view(1, 1, 3, 3)
 
+    with open(args.output, "wb") as f:
+        for frame in container.decode(stream):
+            # 1. Convert to RGB Tensor
+            img = torch.from_numpy(frame.to_rgb().to_ndarray()).permute(2, 0, 1).float().unsqueeze(0)
+            
+            # 2. Upscale back to original resolution
+            img = F.interpolate(img, size=(target_h, target_w), mode='bilinear', align_corners=False)
+            
+            # 3. Apply Sharpening (Helps SegNet classification)
+            # Apply per channel
+            sharpened = []
+            for c in range(3):
+                chan = img[:, c:c+1, :, :]
+                chan = F.conv2d(chan, sharpen_kernel, padding=1)
+                sharpened.append(chan)
+            img = torch.cat(sharpened, dim=1).clamp(0, 255)
+            
+            # 4. Save as raw uint8 RGB
+            raw_frame = img.squeeze(0).permute(1, 2, 0).to(torch.uint8).cpu().numpy()
+            f.write(raw_frame.tobytes())
+            
+    container.close()
 
 if __name__ == "__main__":
-  import sys
-  src, dst = sys.argv[1], sys.argv[2]
-  n = decode_and_resize_to_file(src, dst)
-  print(f"saved {n} frames")
+    main()
