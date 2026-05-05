@@ -111,7 +111,7 @@ Open a Pull Request with your submission and follow the template instructions to
 bash evaluate.sh --submission-dir ./submissions/baseline_fast --device cpu|cuda|mps
 ```
 
-The official evaluation has a time limit of 30 minutes. If your inflation script requires a GPU, it will run on a T4 GPU instance (RAM: 26GB, VRAM: 16GB), if it doesn't it will run on a CPU instance (CPU: 4, RAM: 16GB).
+The official evaluation has a time limit of 30 minutes. ~~If your inflation script requires a GPU, it will run on a T4 GPU instance (RAM: 26GB, VRAM: 16GB), if it doesn't it will run on a CPU instance (CPU: 4, RAM: 16GB)~~ edit: all submissions are evaluated in a T4 GPU instance (RAM: 26GB, VRAM: 16GB) due to small hardware decode differences and to ensure submissions are scored against the same ground truth.
 
 ### rules
 
