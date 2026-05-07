@@ -28,11 +28,19 @@
 <img height="800" alt="image" src="https://github.com/user-attachments/assets/eac1bf44-3b35-40fd-ab82-4dde4a2f5d07" />
 </p>
 
-## prize pool - ~~submit by May, 3rd 2026 11:59pm AOE~~ CLAIMED - See leaderboard for winners!
-- 1st place: [comma four OR $1,000] + special swag
-- 2nd place: [$500] + special swag
-- 3rd place: [$250] + special swag
-- Best write-up (visualizations, patterns, etc.): [comma four OR $1,000] + special swag
+## prize pool - ~~submit by May, 3rd 2026 11:59pm AOE~~
+The challenge is still open for submissions! Submit to get on the leaderboard, apply for a job/internship, or just for fun! See [submission format and rules](#submission-format-and-rules)
+
+Congratulations to the competition winners! See leaderboard for more submissions.
+
+- 1st place: [comma four OR $1,000] + special swag: [@SajayR](https://github.com/SajayR) ([#101](https://github.com/commaai/comma_video_compression_challenge/pull/101))
+- 2nd place: $500 + special swag: [@rem2](https://github.com/rem2) ([#103](https://github.com/commaai/comma_video_compression_challenge/pull/103))
+- 3rd place: $250 + special swag: [@EthanYangTW](https://github.com/EthanYangTW) ([#102](https://github.com/commaai/comma_video_compression_challenge/pull/102))
+- Best write-up (visualizations, patterns, etc.): [comma four OR $1,000] + special swag: [@AaronLeslie138](https://github.com/AaronLeslie138) ([write-up](https://aaronleslie.dev/blog/comma-compression))
+- Honorary prize (open-code, new approach): $500 + special swag: [@Quantizr](https://github.com/Quantizr) ([#55](https://github.com/commaai/comma_video_compression_challenge/pull/55))
+- Honorary prize (open-code, new approach): $500 + special swag: [@AaronLeslie138](https://github.com/AaronLeslie138) ([#95](https://github.com/commaai/comma_video_compression_challenge/pull/95))
+- Honorary prize (open-code, new approach): $500 + special swag: [@valtterivalo](https://github.com/valtterivalo) ([#105](https://github.com/commaai/comma_video_compression_challenge/pull/105))
+
 
 ## quickstart
 Clone the repo
@@ -103,7 +111,7 @@ A submission is a Pull Request to this repo that includes:
 
 See [submissions/baseline_fast/](submissions/baseline_fast/) for a working example, and  `./evaluate.sh` for how the evaluation process works.
 
-Open a Pull Request with your submission and follow the template instructions to be evaluated. If your submission includes a working compression script, and is competitive we'll merge it into the repo. Otherwise, only the leaderboard will be updated with your score and a link to your PR.
+Open a Pull Request with your submission and follow the template instructions to be evaluated.
 
 ### evaluation
 
@@ -997,3 +1005,11 @@ Check out this large grid search over various ffmpeg parameters. Each point in t
 You can also use [test_videos.zip](https://huggingface.co/datasets/commaai/comma2k19/resolve/main/compression_challenge/test_videos.zip), which is a 2.4 GB archive of 64 driving videos from the comma2k19 dataset, to test your compression strategy on more samples.
 
 The evaluation script and the dataloader are designed to be scalable and can handle different batch sizes, sequence lengths, and video resolutions. You can modify them to fit your needs.
+
+## community write-ups and forks
+
+- [How I (Spiritually) Won comma.ai's Compression Challenge](https://aaronleslie.dev/blog/comma-compression) by [@AaronLeslie138](https://github.com/AaronLeslie138)
+- [Generator Visualizations](https://tomdousek.github.io/) by [@TomDousek](https://github.com/TomDousek)
+- [VIBE_CODER_FINAL_BOSS - comma video compression challenge writeup](https://comma-writeup.pages.dev/) by [@BradyMeighan](https://github.com/BradyMeighan)
+- [kitchen sink - comma compression writeup](https://github.com/user-attachments/files/27357161/kitchen-sink.html) by [@valtterivalo](https://github.com/valtterivalo)
+- [Compressing What the Evaluator Can See](https://github.com/SajayR/comma_video_compression_challenge/blob/cce857392701e73861ad513d34906faba523f719/submissions/qrepro/README.md) by [@SajayR](https://github.com/SajayR)
