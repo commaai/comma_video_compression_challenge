@@ -19,6 +19,10 @@
 # did you include the compression script? and want it to be merged?
 <!-- yes|no -->
 
+# is this submission competitive or innovative? explain why
+<!-- competitive: better than top #1 submission -->
+<!-- innovative: it has a novel idea that is not on the leaderboard yet, might not be competitive, but has potential -->
+
 # additional comments
 <!-- anything else you want to share -->
 <!-- describe your solution -->
