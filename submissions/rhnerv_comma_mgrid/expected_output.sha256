@@ -1,0 +1,11 @@
+# Canonical reproducibility token for this submission.
+# Running `inflate.sh <unzipped-archive-dir> <out> public_test_video_names.txt`
+# on CPU with the same archive bytes (SHA-256
+# dd4f3899b91f5b59df90b4bf4fc4d903099a286548339f5f65ff91e4b8146aa4)
+# must reproduce this 0.raw SHA-256 exactly on this machine (AMD Zen 5).
+# The LSBs of CPU bicubic interpolation are microarchitecture-dependent, so
+# other hosts produce a different (locally deterministic) hash; the decode
+# math is identical to PR #110's, so on any given host this submission's
+# 0.raw is byte-identical to PR #110's (the #110 author's machine yields
+# d1afc583b01ff4a7aaa844d4f03ece3ed381d56763a06cb2c5e011526e5f868c).
+e592c742dfd64fd8d8d42c83ad7066f8c012ed677cbb55644e1e57381106040a  0.raw
