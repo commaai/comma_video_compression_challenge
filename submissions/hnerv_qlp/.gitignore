@@ -1,0 +1,6 @@
+work/
+__pycache__/
+ckpts/
+inflated/
+*.raw
+encoder/__pycache__/
