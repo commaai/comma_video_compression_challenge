@@ -1,0 +1,9 @@
+# Canonical reproducibility token for this submission.
+# Running `inflate.sh <unzipped-archive-dir> <out> public_test_video_names.txt`
+# on CPU with the same archive bytes (SHA-256
+# 869e666b4dd65d8da59f39a375505b65af28a695d94c73675e63864d678b8d1b)
+# must reproduce this 0.raw SHA-256 exactly on this machine (Apple M5 Pro, arm64).
+# CPU bicubic-interpolation LSBs are microarchitecture-dependent, so other hosts
+# produce a different (locally deterministic) hash; the official x86 ubuntu-latest
+# CI reproduces the scored metrics (seg 0.00056052, pose 0.00002902 -> 0.190503).
+0cd8101de3254dab2f5c7bde1457cd1f0747f8ea6d65e70051da5200017a9bd0  0.raw
