@@ -6,7 +6,7 @@ document acknowledges the upstream contributions and identifies the
 corresponding files in this submission.
 
 This submission modifies only the stored latent codes: PR #101's 607-byte
-sidecar corrections are folded into them, and 1,802 net one- and two-step code
+sidecar corrections are folded into them, and 2,162 net one- and two-step code
 adjustments were applied, each verified against the exact contest score.
 Decoder weight bytes remain byte-identical to PR #101/#98/#95, the FEC6
 selector to PR #110, and the container/entropy-coding layer plus decode
@@ -72,7 +72,7 @@ runtime to PR #112 (`rhnerv_comma`), minus the now-unused sidecar path.
 
 ## This submission's contributions
 
-- The 1,802 net latent-code adjustments (±1/±2 grid steps, CPU-axis selected) themselves, found by an
+- The 2,162 net latent-code adjustments (±1/±2 grid steps, CPU-axis selected) themselves, found by an
   exact-score-gated discrete search (every candidate adjustment was scored
   with the official SegNet/PoseNet evaluators and the real re-encoded archive
   size; only exact improvements were kept), and the folding of PR #101's
