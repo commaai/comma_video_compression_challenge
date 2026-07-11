@@ -10,7 +10,7 @@
   video_names_file: C:\Users\samar\Downloads\comaai\comma_video_compression_challenge\public_test_video_names.txt
 === Evaluation results over 600 samples ===
   Average PoseNet Distortion: 0.00002937
-  Average SegNet Distortion: 0.00053309
+  Average SegNet Distortion: 0.00053263
   Submission file size: 176,531 bytes
   Original uncompressed size: 37,545,489 bytes
   Compression Rate: 0.00470179
