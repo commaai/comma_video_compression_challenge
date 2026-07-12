@@ -4,7 +4,8 @@
 
 Quantizes the decoder per-tensor at a configurable bit-width and the latents to
 8-bit per-dim, then entropy-codes with the codec_ctx container (no FEC6 selector,
-no sidecar). Self-contained: uses the local model.py / codec.py / codec_ctx.py.
+no sidecar). Reuses the merged PR #112 modules from submissions/rhnerv_comma/
+(codec_ctx, codec, model) rather than vendoring copies.
 
 Usage:
   python compress.py <decoder.pt> <latents.pt> <out_archive.zip> [bits.json]
@@ -20,6 +21,8 @@ import numpy as np
 import torch
 
 HERE = Path(__file__).resolve().parent
+RHNERV = HERE.parent / "rhnerv_comma"   # merged PR #112 — reused, not vendored
+sys.path.insert(0, str(RHNERV))
 sys.path.insert(0, str(HERE))
 import codec_ctx  # noqa: E402
 from codec import (  # noqa: E402

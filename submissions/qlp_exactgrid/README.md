@@ -38,12 +38,25 @@ archive is smaller (176,337 vs 176,525 B) with better pose and tied seg.
    35 modes, +48 B) improves pose. SegNet sees only frame1, so this is pose-only
    and seg-neutral by construction.
 
+## Code reuse
+
+This submission does **not** vendor the shared decode/codec modules. `inflate.py`
+and `pack_base.py` import `codec_ctx`, `codec`, and `model` directly from the
+merged `submissions/rhnerv_comma/` (PR #112, which carries the PR #95 decoder and
+PR #101 tensor reconstruction). Only the files unique to this submission are
+present here: the FS1B pose-selector tail (`fs1b.py`, `fs1b_palette.py`,
+`fs1b_compress.py`), the composed `inflate.py`, the packer wrapper
+(`pack_base.py`), and the polished-latent inputs (`selection.json` + release
+assets).
+
 ## Inflate
 
 `inflate.sh <archive_dir> <out_dir> <video_list>` — CPU-pinned, deterministic on
 a given machine; deps: `numpy`, `torch`, `constriction` (harness base env; no
-network). `expected_output.sha256` is the canonical decode on the build machine
-(Apple M5 Pro, arm64); x86 differs only in bicubic LSBs (~1.5e-7 seg, see PR #112).
+network). Imports resolve `../rhnerv_comma` relative to this directory (present in
+the checked-out repo). `expected_output.sha256` is the canonical decode on the
+build machine (Apple M5 Pro, arm64); x86 differs only in bicubic LSBs
+(~1.5e-7 seg, see PR #112).
 
 ## Reproduction
 

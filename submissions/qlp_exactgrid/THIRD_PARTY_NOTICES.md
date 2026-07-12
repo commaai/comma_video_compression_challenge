@@ -1,22 +1,25 @@
 # Third-party notices
 
 All upstream works are MIT-licensed submissions to this repository
-(commaai/comma_video_compression_challenge).
+(commaai/comma_video_compression_challenge). This submission **imports** the
+shared decode/codec modules directly from the merged `submissions/rhnerv_comma/`
+(PR #112) rather than vendoring copies — `codec_ctx.py`, `codec.py`, and
+`model.py` are not duplicated here.
 
 - **PR #95 — `hnerv_muon` (@AaronLeslie138)**: HNeRV decoder architecture
-  (`model.py`, byte-compatible). https://github.com/commaai/comma_video_compression_challenge/pull/95
+  (`model.py`, imported from #112). https://github.com/commaai/comma_video_compression_challenge/pull/95
 - **PR #98 — channel-bias correction (@AaronLeslie138)**: the frame0 R−1/B−1,
   frame1 G−1 decode biases, reused in the inflate chain.
 - **PR #101 — `hnerv_ft_microcodec` (@SajayR)**: the fine-tuned decoder weights
   used as the frozen decoder + polish initialization; tensor payload
-  reconstruction (`codec.py`, `codec_sidecar.py`).
+  reconstruction (`codec.py`, imported from #112).
   https://github.com/commaai/comma_video_compression_challenge/pull/101
 - **PR #110 — `hnerv_fec6_fixed_huffman_k16` (@adpena)**: the per-pair frame0
-  perturbation-selector concept our researched pose selector builds on;
-  `frame_selector.py` transform families.
+  perturbation-selector concept our researched pose selector builds on.
   https://github.com/commaai/comma_video_compression_challenge/pull/110
 - **PR #112 — `rhnerv_comma` (@mattneel)**: the context-modeled range coder
-  (`codec_ctx.py`, reused unchanged) and base-member container format.
+  (`codec_ctx.py`) and base-member container format, imported unchanged from
+  `submissions/rhnerv_comma/`.
   https://github.com/commaai/comma_video_compression_challenge/pull/112
 - **PR #125 — `hnerv_qlp` (@Bucky789)**: independent, concurrent work sharing the
   core idea of quantization-aware gradient polish of the per-pair latents against
