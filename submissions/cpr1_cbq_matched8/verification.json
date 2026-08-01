@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "submission_name": "cpr1_cbq_matched8",
+  "lineage": {
+    "direct_ancestor": {
+      "name": "semantic-pose-HPAC_CPR1",
+      "author": "Fesal Fayed",
+      "challenge_pr": 130,
+      "license": "MIT"
+    },
+    "earlier_challenge_ancestors": [
+      {
+        "name": "jas0xf_adversarial_neural_representation",
+        "author": "jas0xf",
+        "challenge_pr": 86
+      },
+      {
+        "name": "qpose14_qzs3_filmq9g_slsb1_r55",
+        "author": "EthanYangTW",
+        "challenge_pr": 67
+      },
+      {
+        "name": "qpose14_r55_segactions_minp",
+        "author": "EthanYangTW",
+        "challenge_pr": 79
+      }
+    ]
+  },
+  "archive": {
+    "bytes": 190212,
+    "sha256": "051baf408f57fae3b343d6ee218ab963d070b3935ceb0b2f412c93a53cf3fab0",
+    "members": [
+      "p"
+    ],
+    "payload_bytes": 190112,
+    "carrier_bytes": 22304,
+    "carrier_sha256": "080aaf3206e1afc1449c8deff14362bb0b910d937df15106bfb53befe6d5045e",
+    "lossless_carrier_roundtrip": true
+  },
+  "inherited_from_cpr1_byte_identical": {
+    "decoder_modules": [
+      "inflate.py",
+      "inflate.sh",
+      "carrier_codec.py",
+      "hpac_integer.py",
+      "hpac_integer_sparse.py",
+      "integer_model_io.py"
+    ],
+    "semantic_renderer_bytes": 40252,
+    "hpac_model_bytes": 20179,
+    "token_stream_bytes": 116980,
+    "note": "Only the 22,304-byte pose carrier differs from CPR1's artifact; 88.8% of the payload is byte-identical."
+  },
+  "payload_change": {
+    "method": "Compensability-aware Basis Quantization (CBQ) with a matched eight-pass coefficient search",
+    "low_precision_atoms": [
+      2,
+      5,
+      9
+    ],
+    "baseline_basis_bits": 5,
+    "selected_basis_bits": 4,
+    "coefficient_search": {
+      "rows_per_pass": 600,
+      "passes": 8,
+      "steps": [1, 2, 4, 8, 16, 32],
+      "candidate_batch_size": 8
+    }
+  },
+  "official_evaluator_t4": {
+    "date": "2026-08-01",
+    "gpu": "Tesla T4",
+    "driver": "580.82.07",
+    "vram_mib": 15360,
+    "python": "3.11.15",
+    "torch": "2.9.0+cu128",
+    "torch_cuda": "12.8",
+    "dependency_group": "cu128",
+    "challenge_commit": "5387a097398ec6581c7e4e428231e1821fc62670",
+    "evaluator_modified": false,
+    "device": "cuda",
+    "samples": 600,
+    "pose_distortion_displayed": 0.00000896,
+    "seg_distortion_displayed": 0.00029660,
+    "rate_displayed": 0.00506617,
+    "score_displayed": 0.17,
+    "score_rounding_interval": [
+      0.16577695,
+      0.16578323
+    ],
+    "report_sha256": "a5b4d393ed6f0f5b56acb08ee331d67292cf0ab771ba36202a397a6531e58f1a",
+    "wall_clock_inflate_plus_evaluate_seconds": 693,
+    "maintainer_triggered": false
+  },
+  "calibration_cpr1_original_same_session": {
+    "archive_bytes": 191052,
+    "archive_sha256": "0491d5df84fc70b62b3f7ccf8894f5e1b81c616de46a052e4423fc1e18fdc7cd",
+    "pose_distortion_displayed": 0.00002331,
+    "seg_distortion_displayed": 0.00029660,
+    "rate_displayed": 0.00508855,
+    "score_recomputed": 0.17214130,
+    "report_sha256": "35ae74c6fd8952b0cc413c8632d2affa585375cb9ec4cc9facdc60c84459c9f0",
+    "matches_maintainer_triggered_workflow_on_pr_130": true,
+    "matched_decimals": 8,
+    "note": "Same GPU, same pinned environment and same decoder copy as the candidate run; the only variable was archive.zip."
+  },
+  "attribution_control_matched_effort": {
+    "design": "Unchanged CPR1 basis, identical eight-pass coefficient-search budget.",
+    "effort_matched": true,
+    "control_pose_local_mps": 0.0000080833270,
+    "control_archive_bytes": 191040,
+    "control_pass8_accepted_rows": 205,
+    "candidate_pose_local_mps": 0.0000078771227,
+    "candidate_archive_bytes": 190212,
+    "candidate_pass8_accepted_rows": 140,
+    "cbq_pose_advantage_fraction": 0.0255,
+    "cbq_byte_advantage": 828,
+    "converged": false,
+    "stop_reason": "matched_8_pass_budget",
+    "interpretation": "At matched search effort the CBQ basis change accounts for only 2.55% lower Pose distortion; the defensible contribution is the 828-byte rate saving."
+  },
+  "superseded": {
+    "name": "cpr1_cbq_rescue160",
+    "archive_bytes": 190216,
+    "official_evaluator_t4_score": 0.167362,
+    "note": "Evaluated in the same session on the same rig; matched8 is 0.001582 better."
+  },
+  "claim_boundary": {
+    "competitive_on_calibrated_rig": true,
+    "self_run_rig_calibrated_against_official_runner": true,
+    "official_leaderboard_rank": null,
+    "new_compression_architecture": false,
+    "cbq_residual_isolated_at_convergence": false,
+    "generally_useful_codec_established": false
+  }
+}
