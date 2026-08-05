@@ -1,0 +1,4 @@
+21a06c49d8f403c4f33d41e473c3a7410dac534b60632454f1845648ba990396  0.raw
+# Note: bilinear interpolation LSBs are CPU-microarchitecture-dependent; the metric
+# values reproduce regardless (archive sha256:
+# 9cb7c817f69b5d63192589344870eb41bd14b27a1669e7738a00af90c93e9d7d, 464,856 bytes).
