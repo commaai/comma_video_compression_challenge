@@ -1,0 +1,9 @@
+=== OPAL v4 certified result ===
+  Average PoseNet Distortion: 0.00000688438922225032
+  Average SegNet Distortion: 0.00029639352578669786
+  Submission file size: 182,040 bytes
+  Original uncompressed size: 37,545,489 bytes
+  Compression Rate: 0.004848518553
+  Exact score: 0.1591495383631616
+  Decoded token mismatches: 0 / 117,964,800
+  Decoded token SHA-256: c5c7671d037b6912980c57929a5b6d789d250ee6a93e3b0a6018cf9f63e32ece
