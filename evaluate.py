@@ -97,10 +97,10 @@ def main():
         f"  Submission file size: {compressed_size:,} bytes",
         f"  Original uncompressed size: {uncompressed_size:,} bytes",
         f"  Compression Rate: {rate:.8f}",
-        f"  Final score: 100*segnet_dist + √(10*posenet_dist) + 25*rate = {score:.2f}"
+        f"  Final score: 100*segnet_dist + sqrt(10*posenet_dist) + 25*rate = {score:.2f}"
       ]
       print("\n".join(printed_results))
-      with open(args.report, "w") as f:
+      with open(args.report, "w", encoding="utf-8") as f:
         f.write("\n".join(printed_args + printed_results) + "\n")
 
   # Cleanup
