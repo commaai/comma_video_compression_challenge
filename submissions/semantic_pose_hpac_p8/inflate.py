@@ -11,8 +11,9 @@ from pathlib import Path
 
 from runtime.f26_inflate import inflate_archive
 
-ARCHIVE_SHA256 = "12cf5d71a94065184f097c3e40dfe9f1db8402a1a76a80efc76a6956fe1e4004"
-ARCHIVE_BYTES = 186_724
+
+ARCHIVE_SHA256 = "0e496aea27948d23128fc9292655fc784715c6366d2d0fa582248a3d01f561bd"
+ARCHIVE_BYTES = 185_653
 
 
 def _sha256(path: Path) -> str:
