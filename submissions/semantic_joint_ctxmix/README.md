@@ -59,11 +59,12 @@ My contribution is the decision and lossless-representation layer on top:
   repository linked below.
 - **TODO (planned after this submission):** a `--device` flag (cuda / mps / cpu) so
   the solve stages can run on CUDA as well as on the Apple-silicon stack; a
-  full-pipeline mode that starts from the raw video by running the credited
-  PR #130/#135 training scripts and then these solve and packaging stages
-  (equivalent quality, not identical bytes — neural training does not reproduce
-  bit-for-bit across different GPUs); and per-video auto-configuration so the
-  pipeline can be pointed at any clip, not just this one.
+  full-pipeline mode that starts from the raw video, runs the credited
+  PR #130/#135 training scripts, and then applies these solve and packaging
+  stages (because neural training is not bit-for-bit reproducible across GPUs,
+  the resulting archive's score and quality would need fresh measurement); and
+  per-video auto-configuration so the pipeline can be pointed at any clip, not
+  just this one.
 
 ## Verify
 
