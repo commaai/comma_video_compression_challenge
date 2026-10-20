@@ -166,6 +166,36 @@ The official evaluation has a time limit of 30 minutes. Pick your runtime: githu
    <td>
    </td>
    <td>
+    0.134
+   </td>
+   <td>
+    semantic_folded
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/150" target="_blank">
+     #150
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    0.136
+   </td>
+   <td>
+    adaptive_renderer_codec
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/149" target="_blank">
+     #149
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
     0.136
    </td>
    <td>
