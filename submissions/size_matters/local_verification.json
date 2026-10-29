@@ -1,0 +1,38 @@
+{
+  "status": "lossless_verified_with_saved_gpu_result",
+  "archive_bytes": 163284,
+  "saved_bytes": 1077,
+  "restored_payload_sha256": "be0857e206b3130a67b685880d8e38de52b91300bd7fe13fb581bf6b8574209c",
+  "reference_components_identical": true,
+  "component_hashes": {
+    "model_header": {
+      "bytes": 8,
+      "sha256": "1e97af3849cc109feb867ecea860e302c2c4b9e927fae5849a9d00ffbcb4ab57"
+    },
+    "hpac_ihs1": {
+      "bytes": 17962,
+      "sha256": "6330e8aa827a0ca3fd4c4753fcb95453904e205b93a6d54136940b29df0d4194"
+    },
+    "semantic_layout": {
+      "bytes": 25591,
+      "sha256": "ccaa32a1dbfe5d5c5da8a3019bc9401390398b58a3aca573474c8a1a285ea427"
+    },
+    "carrier": {
+      "bytes": 17509,
+      "sha256": "d02ed53fc974ab867b98cd87dc2cff144ec393bae1c32cabe871ebb99fe64f9d"
+    },
+    "residual_tokens_warp": {
+      "bytes": 109357,
+      "sha256": "34e5f3f94c4acf063cfc6160fd71b3d74cf514ebf71e6c2bdade6869bb4cb658"
+    }
+  },
+  "unchanged_decoder_files": 60,
+  "inferred_score_upper_bound": 0.12492237848288965,
+  "target": 0.125,
+  "inferred_under_target": true,
+  "score_basis": "Saved 600-sample CUDA evaluation of this exact archive; local restoration and source checks passed.",
+  "derived_score_from_previous_gpu_distortions": 0.12491174721378362,
+  "derived_under_target": true,
+  "saved_gpu_score": 0.12491174721378362,
+  "saved_gpu_evaluation_seconds": 990
+}

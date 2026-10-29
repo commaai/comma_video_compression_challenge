@@ -1,0 +1,3 @@
+* text eol=lf
+vendor/** -text
+archive.zip -text

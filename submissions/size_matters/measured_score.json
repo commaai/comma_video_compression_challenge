@@ -1,0 +1,14 @@
+{
+  "status": "measured_gpu",
+  "samples": 600,
+  "pose_distortion": 0.00000132791876695,
+  "seg_distortion": 0.000125435719383,
+  "archive_bytes": 163284,
+  "archive_sha256": "3d0ceeae393aa6291f79087045327b4140c7e90285a8aeb7b6d6de4f316cee64",
+  "original_bytes": 37545489,
+  "raw_bytes": 3662409600,
+  "score": 0.12491174721378362,
+  "evaluation_seconds": 990,
+  "target": 0.125,
+  "under_target": true
+}
