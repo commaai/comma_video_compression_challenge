@@ -1,0 +1,31 @@
+Size Matters
+
+Local reported score: 0.124911747 over 600 samples.
+Archive: 163,284 bytes. See measured_score.json for the saved result and hash.
+The official evaluation is pending. See NOTICE.txt for source attribution.
+
+Place the complete folder at submissions/size_matters in the challenge repository.
+Download the release archive.zip into that folder, beside inflate.sh.
+Run the commands below from the challenge repository root.
+
+CPU archive checks and reconstruction:
+    python -m pip install -r submissions/size_matters/requirements-cpu.txt
+    python submissions/size_matters/verify.py
+    python submissions/size_matters/compress.py --download-reference
+
+GPU evaluation requires NVIDIA CUDA, a C compiler and the challenge dependencies.
+The saved run used evaluator commit 0bbea33450719bc15cd799ece1fac4ddea1e0a14.
+With uv installed:
+    uv sync --frozen --group cu128 --python 3.11
+    uv run --frozen --group cu128 bash evaluate.sh --submission-dir ./submissions/size_matters --device cuda
+
+The saved run increased report precision without changing the score formula or
+models. The standard evaluator may print a rounded score.
+
+run_gpu.sh is an optional fresh Linux/Colab setup helper. It runs apt-get and pip,
+requires root for package installation, clones the pinned evaluator, downloads
+the public challenge assets, and changes only report number formatting.
+The normal inflate.sh entry point does not install those system packages.
+
+Archive reconstruction uses the public, hash-checked PR151 archive. It does not
+train new models. All inherited decoder files and license notices are retained.

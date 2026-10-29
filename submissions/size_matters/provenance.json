@@ -1,0 +1,59 @@
+{
+  "submission": "Size Matters",
+  "reference_pull_request": "https://github.com/commaai/comma_video_compression_challenge/pull/151",
+  "reference_source_commit": "56ba57f",
+  "reference_archive_url": "https://github.com/darskkaa/comma_video_compression_challenge/releases/download/v1.0/archive.zip",
+  "reference_archive_sha256": "9e2de76d931c5a7aca29f7e9008c4d77b34ec037d042113e2fd082607391f315",
+  "reference_archive_bytes": 164361,
+  "reference_payload_sha256": "a908468537efecdc21d202b2ee782e1546b289edc7db6b346a9ea63d6c9ef733",
+  "reference_reported_seg_distortion": 0.00012544,
+  "reference_reported_pose_distortion": 1.33e-06,
+  "original_video_bytes": 37545489,
+  "license": "MIT; see LICENSE and vendor/external/pr141/LICENSE",
+  "lineage": [
+    151,
+    150,
+    146,
+    141,
+    140,
+    135,
+    130
+  ],
+  "reference_components": {
+    "model_header": {
+      "bytes": 8,
+      "sha256": "1e97af3849cc109feb867ecea860e302c2c4b9e927fae5849a9d00ffbcb4ab57"
+    },
+    "hpac_ihs1": {
+      "bytes": 17962,
+      "sha256": "6330e8aa827a0ca3fd4c4753fcb95453904e205b93a6d54136940b29df0d4194"
+    },
+    "semantic_layout": {
+      "bytes": 25591,
+      "sha256": "ccaa32a1dbfe5d5c5da8a3019bc9401390398b58a3aca573474c8a1a285ea427"
+    },
+    "carrier": {
+      "bytes": 17509,
+      "sha256": "d02ed53fc974ab867b98cd87dc2cff144ec393bae1c32cabe871ebb99fe64f9d"
+    },
+    "residual_tokens_warp": {
+      "bytes": 109357,
+      "sha256": "34e5f3f94c4acf063cfc6160fd71b3d74cf514ebf71e6c2bdade6869bb4cb658"
+    }
+  },
+  "container_format": "SMP3; HPAC integer rows, renderer arrays, predicted carrier RGB planes and structured tail coding",
+  "reconstruction_note": "The HPAC Brotli stream is rebuilt from identical IHS1 bytes; compressed bytes and length fields can differ. Header flags, unpacked HPAC bytes, semantic LAY1 bytes, carrier and full residual/token/warp tail are identical.",
+  "parity_baseline": {
+    "status": "measured_gpu",
+    "samples": 600,
+    "pose_distortion": 1.32791876695e-06,
+    "seg_distortion": 0.000125435719383,
+    "archive_bytes": 163827,
+    "archive_sha256": "12c2a57b257b4f303fb663c4021387ec9d90c594c3192056e7e6f9bca461685d",
+    "original_bytes": 37545489,
+    "score": 0.12527330862532896,
+    "evaluation_seconds": 990
+  },
+  "target": 0.125,
+  "rowpack_reference": "https://github.com/commaai/comma_video_compression_challenge/pull/148"
+}

@@ -1,0 +1,17 @@
+{
+  "status": "actual_unmodified_parser_components_equal",
+  "checks": {
+    "semantic_blob": true,
+    "carrier_blob": true,
+    "hpac_blob": true,
+    "token_stream": true,
+    "table": true,
+    "schema": true,
+    "residual_payload": true,
+    "compensation_blob": true,
+    "token_codec": true,
+    "warp": true,
+    "extension_payload": true
+  },
+  "restored_payload_sha256": "be0857e206b3130a67b685880d8e38de52b91300bd7fe13fb581bf6b8574209c"
+}
