@@ -1,0 +1,35 @@
+{
+  "status": "component_and_full_T4_verified",
+  "archive_bytes": 163089,
+  "archive_sha256": "52a98a5f7840648c5b08fe958ac42d14e31f8a1e5452c72995f212a538e144a4",
+  "saved_vs_pr151_bytes": 1272,
+  "saved_vs_pr152_bytes": 195,
+  "carrier_bytes": 16799,
+  "reference_component_hashes": {
+    "model_header": {
+      "bytes": 8,
+      "sha256": "1e97af3849cc109feb867ecea860e302c2c4b9e927fae5849a9d00ffbcb4ab57"
+    },
+    "hpac_ihs1": {
+      "bytes": 17962,
+      "sha256": "6330e8aa827a0ca3fd4c4753fcb95453904e205b93a6d54136940b29df0d4194"
+    },
+    "semantic_layout": {
+      "bytes": 25591,
+      "sha256": "ccaa32a1dbfe5d5c5da8a3019bc9401390398b58a3aca573474c8a1a285ea427"
+    },
+    "carrier": {
+      "bytes": 17509,
+      "sha256": "d02ed53fc974ab867b98cd87dc2cff144ec393bae1c32cabe871ebb99fe64f9d"
+    },
+    "residual_tokens_warp": {
+      "bytes": 109357,
+      "sha256": "34e5f3f94c4acf063cfc6160fd71b3d74cf514ebf71e6c2bdade6869bb4cb658"
+    }
+  },
+  "measured_score": 0.12478190471791535,
+  "samples": 600,
+  "raw_identical_to_baseline": true,
+  "decode_and_evaluation_seconds": 1054.1119186769997,
+  "official_submission": false
+}

@@ -1,0 +1,11 @@
+{
+  "score": 0.12478190471791535,
+  "posenet_dist": 1.3279187669468229e-06,
+  "segnet_dist": 0.00012543571938294917,
+  "compressed_size": 163089,
+  "uncompressed_size": 37545489,
+  "rate": 0.004343770832229672,
+  "samples": 600,
+  "evaluation_seconds": 41.01920155700009,
+  "evaluator_sha256": "7da71a84ce24286bc6b583470f9bbd25c998971da301320d0d4e9d6fd40baa4b"
+}
