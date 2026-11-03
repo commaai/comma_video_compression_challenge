@@ -1,0 +1,20 @@
+{
+  "status": "measured_gpu",
+  "samples": 600,
+  "pose_distortion": 1.3279187669468229e-06,
+  "seg_distortion": 0.00012543571938294917,
+  "score": 0.12478190471791535,
+  "archive_bytes": 163089,
+  "archive_sha256": "52a98a5f7840648c5b08fe958ac42d14e31f8a1e5452c72995f212a538e144a4",
+  "original_bytes": 37545489,
+  "raw_bytes": 3662409600,
+  "raw_sha256": "ac00b4a0aaca2deb3df9e7d14c95ebd37c096c70bec87b492b845d01b202d913",
+  "raw_identical_to_reference151": true,
+  "inflate_seconds": 1013.0927171199996,
+  "model_evaluation_seconds": 41.01920155700009,
+  "evaluation_seconds": 1054.1119186769997,
+  "device": "Tesla T4",
+  "evaluator_commit": "0bbea33450719bc15cd799ece1fac4ddea1e0a14",
+  "evaluator_sha256": "7da71a84ce24286bc6b583470f9bbd25c998971da301320d0d4e9d6fd40baa4b",
+  "official_submission": false
+}
