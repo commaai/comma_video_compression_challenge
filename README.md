@@ -166,6 +166,36 @@ The official evaluation has a time limit of 30 minutes. Pick your runtime: githu
    <td>
    </td>
    <td>
+    0.125
+   </td>
+   <td>
+    hypery11_carrier_joint
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/153" target="_blank">
+     #153
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    0.125
+   </td>
+   <td>
+    size_matters
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/152" target="_blank">
+     #152
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
     0.126
    </td>
    <td>
@@ -279,6 +309,21 @@ The official evaluation has a time limit of 30 minutes. Pick your runtime: githu
    <td>
     <a href="https://github.com/commaai/comma_video_compression_challenge/pull/143" target="_blank">
      #143
+    </a>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>
+    0.162
+   </td>
+   <td>
+    hpac_rowpack
+   </td>
+   <td>
+    <a href="https://github.com/commaai/comma_video_compression_challenge/pull/148" target="_blank">
+     #148
     </a>
    </td>
   </tr>
