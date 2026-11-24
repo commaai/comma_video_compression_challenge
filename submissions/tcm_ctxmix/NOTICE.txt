@@ -1,0 +1,83 @@
+NOTICE AND ATTRIBUTION
+
+This submission combines new TCM and TCM integration code with material derived from
+earlier comma video compression challenge submissions.
+
+LICENCE
+
+The top-level LICENSE file is the MIT License, Copyright (c) 2026 comma.ai.
+It covers the repository submission and the vendored decoder, folding and semantic
+files, consistently with PR #153's distribution.
+
+vendor/external/pr141/LICENSE is also kept in this folder. It is the MIT License,
+Copyright (c) 2026 comma.ai.
+
+PR #153 NOTICE AND DATA
+
+PR #153, "hypery11_carrier_joint", is by hypery11.
+https://github.com/commaai/comma_video_compression_challenge/pull/153
+
+The following data and code included here come from or are derived from PR #153:
+
+* The 600 semantic token maps and the renderer, carrier, and EXT1 archive data.
+  These are #153's data, re-coded losslessly; they are not newly invented data.
+* The renderer and carrier implementation under pr153/, including
+  renderer_pack.py, carrier_pack.py, hpac_range.py, and carrier_joint.py (the copy
+  removes one unused "import packing" line).
+* The pruned vendored decoder, folding, semantic, carrier, and runtime tree needed
+  by this submission's inflation path. Files retained unchanged are copied from
+  #153's vendored copies.
+* tools/hypery11_carrier_joint/, copied as a verbatim subset of #153's folder and
+  used to decode the token maps and support archive construction.
+* NOTICE_pr153.txt, kept verbatim as PR #153's own notice.
+* tcx_render.py is derived work: it takes #153's inflate_core.py render path and
+  splits it into even-frame carrier rendering and odd-frame semantic rendering.
+* tcx_models.py follows PR #151's decode steps for the semantic and carrier models,
+  calling the vendored runtime helpers.
+
+#153's own LICENSE and notices are retained under LICENSE, NOTICE_pr153.txt,
+tools/hypery11_carrier_joint/LICENSE,
+tools/hypery11_carrier_joint/NOTICE.txt, and
+tools/hypery11_carrier_joint/vendor/external/pr141/LICENSE.
+
+PR #154
+
+PR #154, "darskkaa_mc", is by darskkaa.
+https://github.com/commaai/comma_video_compression_challenge/pull/154
+
+TCM's road-plane reprojection formula was re-implemented in C for tcm/tcm.c from
+the formula in PR #154's container/mc_context.py composite(), not copied. The
+decoder fits the parameters on earlier maps, then applies small per-map corrections
+stored in the stream. No #154 source code is included for this reimplementation.
+#154's folder contains no licence file of its own (only
+external/pr141/LICENSE); the repository's licence is MIT.
+
+EARLIER PR LINEAGE
+
+PR #152 "size_matters" by Jgolding1998 supplied renderer_pack.py, carrier_pack.py,
+and hpac_range.py, which first appear there and are byte-identical in #153.
+
+PR #151 "darskkaa_rdo" by darskkaa supplied residual-archive, RX1M, renderer/carrier
+model, and folding lineage carried into #152 and #153, including
+vendor/folding/rid9.py and the residual archive implementation.
+
+PR #150 "semantic_folded" by Sandesh Bharadwaj supplied vendored numerics, folding,
+and semantic codec files carried by this submission.
+
+PR #148 is credited by #153 for the HPAC rowpack layout. Bubu631 is credited for
+#148. The rowpack implementation is used by the #153 tool subset.
+
+PR #146 "joint_hops" by Ray is named in #153's lineage.
+
+PR #141 "semantic_blocks" by Chase supplied segment-layout lineage and the
+external/pr141 tree name.
+
+PR #140 "semantic_joint_ctxmix" by Alejandro Peña/adpena supplied CPR1 and runtime
+structures, entropy code, the RR5 arithmetic basis implementation, and the DX2
+coefficient rider retained in this submission.
+
+#153's own provenance lists #135 and #130. #135 is attributed to
+Shreyan Mohanty/codexblack. #130 is attributed to Fesal Fayed. PR #133,
+attributed locally to JasonMo123, is credited in PR #140 and #141 lineage
+documentation rather than #153's own provenance. These earlier PRs are lineage
+credits; no additional source from #130, #133 or #135 is claimed here.

@@ -1,0 +1,21 @@
+Size Matters builds on darskkaa's public submission #151:
+https://github.com/commaai/comma_video_compression_challenge/pull/151
+
+The inherited decoder is in vendor/ and is unchanged. Its preceding work
+includes submissions #150, #146, #141, #140, #135 and #130.
+The inherited HPAC rowpack layout also credits Bubu631's #148 work:
+https://github.com/commaai/comma_video_compression_challenge/pull/148 The license
+notices are retained in LICENSE and vendor/external/pr141/LICENSE.
+
+The added encoder recodes the model's integer arrays and restores the
+same weights, renderer representation and coded video data for that decoder.
+
+The carrier codec predicts RGB basis planes with stored integer coefficients.
+The trailer codec restores the original residual table, warp choices and
+correction records. All fitted predictors and coding settings are stored
+in the archive; no video data or model weights are embedded in the source.
+
+
+Local experimental changes (2026-11-04)
+CGA2 carrier coding adds joint color predictor/adaptation selection, column-range coefficient packing, and priors from previously decoded planes. The archive is 195 bytes smaller than PR152; all other PR152 compression gains remain credited to its author. This is an internal workbench candidate; no official score or ranking is claimed.
+Original PR151 vendor decoder files are unchanged.
